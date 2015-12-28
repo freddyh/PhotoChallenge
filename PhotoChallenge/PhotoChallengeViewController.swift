@@ -9,18 +9,7 @@
 import UIKit
 
 class PhotoChallengeViewController: UIViewController {
-	
-//	let imagePickerController = UIImagePickerController()
 
-	@IBAction func takePhotoButtonTapped(sender: UIButton) {
-		
-		
-	}
-	
-	@IBAction func choosePhotoButtonTapped(sender: UIButton) {
-		
-	}
-	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 	}

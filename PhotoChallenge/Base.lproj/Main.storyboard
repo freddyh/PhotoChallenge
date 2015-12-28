@@ -1,63 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="F62-Rg-D22">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Photo Challenge View Controller-->
+        <scene sceneID="rFt-Na-9sZ">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PhotoChallenge" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="F62-Rg-D22" customClass="PhotoChallengeViewController" customModule="PhotoChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="CP2-AJ-Q78"/>
+                        <viewControllerLayoutGuide type="bottom" id="dcL-fT-Q61"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="lIv-QB-SfF">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrz-xa-4ln">
-                                <rect key="frame" x="250" y="250" width="100" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="RbC-dT-FQw"/>
-                                    <constraint firstAttribute="width" constant="100" id="sCp-cs-pmo"/>
-                                </constraints>
-                                <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
-                                <state key="normal" title="Take A Photo"/>
-                                <connections>
-                                    <action selector="takePhotoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VVS-p9-n5q"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HQ6-Ur-XIp">
-                                <rect key="frame" x="206" y="358" width="188" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="Lhm-3m-NAQ"/>
-                                    <constraint firstAttribute="width" constant="100" id="ss9-Nc-oOK"/>
-                                </constraints>
-                                <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
-                                <state key="normal" title="Choose Photo From Library"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="ss9-Nc-oOK"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="choosePhotoButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Oqs-nT-eBr"/>
-                                </connections>
-                            </button>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="do4-Yn-HOz">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="camera" id="KLx-NM-7dL">
+                                        <connections>
+                                            <action selector="showPhotoMenu:" destination="F62-Rg-D22" id="uND-mN-4Br"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="HQ6-Ur-XIp" firstAttribute="centerX" secondItem="wrz-xa-4ln" secondAttribute="centerX" id="4aQ-Ts-scR"/>
-                            <constraint firstItem="wrz-xa-4ln" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="Rai-h6-Nt1"/>
-                            <constraint firstItem="HQ6-Ur-XIp" firstAttribute="top" secondItem="wrz-xa-4ln" secondAttribute="bottom" constant="8" symbolic="YES" id="iNU-OI-Vc9"/>
-                            <constraint firstItem="wrz-xa-4ln" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zxN-Pa-baT"/>
+                            <constraint firstAttribute="trailing" secondItem="do4-Yn-HOz" secondAttribute="trailing" id="nxt-xM-UGb"/>
+                            <constraint firstItem="do4-Yn-HOz" firstAttribute="leading" secondItem="lIv-QB-SfF" secondAttribute="leading" id="oat-uM-4i2"/>
+                            <constraint firstItem="do4-Yn-HOz" firstAttribute="bottom" secondItem="dcL-fT-Q61" secondAttribute="top" id="pVu-9A-CAu"/>
                         </constraints>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eAk-Hi-IgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="444" y="215"/>
         </scene>
     </scenes>
 </document>
