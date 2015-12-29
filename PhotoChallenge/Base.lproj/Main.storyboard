@@ -1,46 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="F62-Rg-D22">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="G8g-an-O9A">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Photo Challenge View Controller-->
-        <scene sceneID="rFt-Na-9sZ">
-            <objects>
-                <viewController id="F62-Rg-D22" customClass="PhotoChallengeViewController" customModule="PhotoChallenge" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="CP2-AJ-Q78"/>
-                        <viewControllerLayoutGuide type="bottom" id="dcL-fT-Q61"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lIv-QB-SfF">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="do4-Yn-HOz">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem systemItem="camera" id="KLx-NM-7dL">
-                                        <connections>
-                                            <action selector="showPhotoMenu:" destination="F62-Rg-D22" id="uND-mN-4Br"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="do4-Yn-HOz" secondAttribute="trailing" id="nxt-xM-UGb"/>
-                            <constraint firstItem="do4-Yn-HOz" firstAttribute="leading" secondItem="lIv-QB-SfF" secondAttribute="leading" id="oat-uM-4i2"/>
-                            <constraint firstItem="do4-Yn-HOz" firstAttribute="bottom" secondItem="dcL-fT-Q61" secondAttribute="top" id="pVu-9A-CAu"/>
-                        </constraints>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eAk-Hi-IgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="444" y="215"/>
-        </scene>
         <!--Photo Editor View Controller-->
         <scene sceneID="5be-16-Quc">
             <objects>
@@ -69,11 +34,12 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ym0-1O-Yyn">
-                                <rect key="frame" x="12" y="28" width="78" height="30"/>
+                                <rect key="frame" x="12" y="28" width="102" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="78" id="0bW-o1-22o"/>
-                                    <constraint firstAttribute="height" constant="30" id="9Tv-RC-0jf"/>
+                                    <constraint firstAttribute="height" constant="50" id="9Tv-RC-0jf"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Save Photo"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -84,8 +50,20 @@
                                     <action selector="saveButtonTapped:" destination="G8g-an-O9A" eventType="touchUpInside" id="WGF-N1-dqn"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6di-cp-WBc">
+                                <rect key="frame" x="188" y="279" width="223" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Create A Photo Post"/>
+                                <connections>
+                                    <action selector="showPhotoMenu:" destination="G8g-an-O9A" eventType="touchUpInside" id="5u7-gY-6HS"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lc2-VI-Upa">
-                                <rect key="frame" x="527" y="28" width="61" height="30"/>
+                                <rect key="frame" x="508" y="28" width="80" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Htj-GW-Pxy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Add Text"/>
                                 <connections>
                                     <action selector="addTextFieldButton:" destination="G8g-an-O9A" eventType="touchUpInside" id="Qan-1B-wfN"/>
@@ -97,8 +75,10 @@
                             <constraint firstItem="lc2-VI-Upa" firstAttribute="top" secondItem="f3g-5I-lGc" secondAttribute="bottom" constant="8" id="4li-Zo-dzl"/>
                             <constraint firstAttribute="trailing" secondItem="ulg-qn-HLc" secondAttribute="trailing" id="5T6-0p-GBP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lc2-VI-Upa" secondAttribute="trailing" constant="-8" id="CkK-Gn-lel"/>
+                            <constraint firstItem="6di-cp-WBc" firstAttribute="centerY" secondItem="5Uy-8H-0P5" secondAttribute="centerY" id="Htu-cU-U6E"/>
                             <constraint firstItem="Ym0-1O-Yyn" firstAttribute="leading" secondItem="5Uy-8H-0P5" secondAttribute="leadingMargin" constant="-8" id="LpQ-VS-aRk"/>
                             <constraint firstItem="Ym0-1O-Yyn" firstAttribute="top" secondItem="f3g-5I-lGc" secondAttribute="bottom" constant="8" id="MKL-F1-cl1"/>
+                            <constraint firstItem="6di-cp-WBc" firstAttribute="centerX" secondItem="5Uy-8H-0P5" secondAttribute="centerX" id="S2w-qu-QtR"/>
                             <constraint firstItem="ulg-qn-HLc" firstAttribute="leading" secondItem="5Uy-8H-0P5" secondAttribute="leading" id="UG8-AU-KvZ"/>
                             <constraint firstItem="ulg-qn-HLc" firstAttribute="top" secondItem="f3g-5I-lGc" secondAttribute="bottom" id="oIg-d8-cQF"/>
                             <constraint firstItem="ulg-qn-HLc" firstAttribute="bottom" secondItem="QdZ-W2-LPl" secondAttribute="top" id="r4j-1e-Und"/>
@@ -107,6 +87,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="addTextButton" destination="lc2-VI-Upa" id="Ytj-9T-5NU"/>
+                        <outlet property="createPhotoPostButton" destination="6di-cp-WBc" id="OZ1-US-zhE"/>
                         <outlet property="imageContainerView" destination="ulg-qn-HLc" id="uF3-eo-tgn"/>
                         <outlet property="imageView" destination="wip-cb-nDQ" id="nRr-1D-WR1"/>
                         <outlet property="saveButton" destination="Ym0-1O-Yyn" id="Ky8-zx-eq3"/>
