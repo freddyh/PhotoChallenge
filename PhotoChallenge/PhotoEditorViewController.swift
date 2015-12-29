@@ -14,13 +14,12 @@ struct Constants {
 
 class PhotoEditorViewController: UIViewController {
 	
-	
 	@IBOutlet weak var imageContainerView: UIView!
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var addTextButton: UIButton!
 	
 	var photo:UIImage?
-	var textField:UITextField?
+	var textField:UITextField? = nil
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,11 +38,15 @@ class PhotoEditorViewController: UIViewController {
 	
 	@IBAction func addTextFieldButton(sender: UIButton) {
 		
-		textField = UITextField(frame: CGRectMake(8.0, 8.0, self.imageContainerView.frame.size.width, 40))
-		textField?.delegate = self
-		textField?.returnKeyType = .Done
-		imageContainerView.addSubview(textField!)
-		textField?.becomeFirstResponder()
+		if textField == nil {
+			textField = UITextField(frame: CGRectMake(8.0, 8.0, self.imageContainerView.frame.size.width, 40))
+			textField!.delegate = self
+			textField!.borderStyle = .None
+			textField!.returnKeyType = .Done
+			imageContainerView.addSubview(textField!)
+		}
+		textField!.becomeFirstResponder()
+		
 	}
 }
 
