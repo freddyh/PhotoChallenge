@@ -104,6 +104,7 @@
                             <constraint firstItem="ulg-qn-HLc" firstAttribute="bottom" secondItem="QdZ-W2-LPl" secondAttribute="top" id="r4j-1e-Und"/>
                         </constraints>
                     </view>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="addTextButton" destination="lc2-VI-Upa" id="Ytj-9T-5NU"/>
                         <outlet property="imageContainerView" destination="ulg-qn-HLc" id="uF3-eo-tgn"/>

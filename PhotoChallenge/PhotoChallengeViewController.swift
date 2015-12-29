@@ -45,21 +45,23 @@ extension PhotoChallengeViewController : UIImagePickerControllerDelegate, UINavi
 	}
 	
 	func useCamera() {
-		
-		let imagePicker = UIImagePickerController()
-		imagePicker.sourceType = .Camera
-		imagePicker.delegate = self
-		imagePicker.allowsEditing = true
-		presentViewController(imagePicker, animated: true, completion: nil)
+		if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+			let imagePicker = UIImagePickerController()
+			imagePicker.sourceType = .Camera
+			imagePicker.delegate = self
+			imagePicker.allowsEditing = true
+			presentViewController(imagePicker, animated: true, completion: nil)
+		}
 	}
 	
 	func openPhotoLibrary() {
-		
-		let imagePicker = UIImagePickerController()
-		imagePicker.sourceType = .PhotoLibrary
-		imagePicker.delegate = self
-		imagePicker.allowsEditing = true
-		presentViewController(imagePicker, animated: true, completion: nil)
+		if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+			let imagePicker = UIImagePickerController()
+			imagePicker.sourceType = .PhotoLibrary
+			imagePicker.delegate = self
+			imagePicker.allowsEditing = true
+			presentViewController(imagePicker, animated: true, completion: nil)
+		}
 	}
 	
 	func imagePickerControllerDidCancel(picker: UIImagePickerController) {

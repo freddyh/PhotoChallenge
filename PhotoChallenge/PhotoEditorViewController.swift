@@ -8,10 +8,6 @@
 
 import UIKit
 
-struct Constants {
-	static let buttonSize:CGFloat = 40.0
-}
-
 class PhotoEditorViewController: UIViewController {
 	
 	@IBOutlet weak var imageContainerView: UIView!
@@ -22,19 +18,37 @@ class PhotoEditorViewController: UIViewController {
 	var photo:UIImage?
 	var textField:UITextField? = nil
 	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		self.addTapGestureRecognizer()
+	}
+	
 	override func viewDidAppear(animated: Bool) {
 
 		super.viewDidAppear(animated)
 		imageView.image = photo!
 	}
 	
+	func addTapGestureRecognizer() {
+		let tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+		tapRecognizer.numberOfTapsRequired = 1
+		tapRecognizer.cancelsTouchesInView = false
+		self.view.addGestureRecognizer(tapRecognizer)
+	}
+	
+	func dismissKeyboard() {
+		self.view.endEditing(true)
+	}
+	
 	@IBAction func addTextFieldButton(sender: UIButton) {
 		
 		if textField == nil {
-			textField = UITextField(frame: CGRectMake(8.0, 50.0, self.imageContainerView.frame.size.width, 40))
+			textField = UITextField(frame: CGRectMake(8.0, imageContainerView.frame.size.height / 2.0 - 40.0, self.imageContainerView.frame.size.width, 40.0))
 			textField!.delegate = self
 			textField!.borderStyle = .None
 			textField!.returnKeyType = .Done
+			
 			imageContainerView.addSubview(textField!)
 		}
 		
@@ -42,11 +56,8 @@ class PhotoEditorViewController: UIViewController {
 	}
 	
 	@IBAction func saveButtonTapped(sender: UIButton) {
-		
+
 		UIImageWriteToSavedPhotosAlbum(self.imageFromContainer(), self, "image:hasBeenSavedWithError:contextInfo:", nil)
-//		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { _ in
-//			
-//			})
 	}
 	
 	func image(image:UIImage , hasBeenSavedWithError error: NSError , contextInfo:UnsafePointer<Void>) {
@@ -55,19 +66,25 @@ class PhotoEditorViewController: UIViewController {
 			print("Error occured when saving image with domain: \(error.domain) and userinfo: \(error.userInfo)")
 			dismissViewControllerAnimated(true, completion: nil)
 		} else {
-			self.showSavedPhotoAlert()
+			self.showSavedPhotoAlert(image)
 		}
 	}
 	
-	func showSavedPhotoAlert() {
+	func showSavedPhotoAlert(image:UIImage) {
 		
 		let successAlert = UIAlertController(title: "Successfully Saved", message: "There is a new photo in your library.", preferredStyle: .Alert)
 		let doneAction = UIAlertAction(title: "OK", style: .Default, handler: { _ in self.dismissViewControllerAnimated(true, completion: nil)})
-		let shareAction = UIAlertAction(title: "Share", style: .Default, handler: nil)
+		let shareAction = UIAlertAction(title: "Share", style: .Default, handler: { _ in self.showShareMenu(image)})
 		successAlert.addAction(doneAction)
 		successAlert.addAction(shareAction)
 		
 		presentViewController(successAlert, animated: true, completion: nil)
+	}
+	
+	func showShareMenu(image:UIImage) {
+		
+		let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+		presentViewController(activityController, animated: true, completion: nil)
 	}
 	
 	func imageFromContainer() -> UIImage {
