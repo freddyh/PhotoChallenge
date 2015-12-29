@@ -11,6 +11,7 @@ import UIKit
 class PhotoEditorViewController: UIViewController {
 	
 	@IBOutlet weak var imageContainerView: UIView!
+	@IBOutlet weak var createPhotoPostButton: UIButton!
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var addTextButton: UIButton!
 	@IBOutlet weak var saveButton: UIButton!
@@ -27,7 +28,21 @@ class PhotoEditorViewController: UIViewController {
 	override func viewDidAppear(animated: Bool) {
 
 		super.viewDidAppear(animated)
-		imageView.image = photo!
+		
+		imageView.image = photo
+		
+		if photo == nil {
+			self.showPhotoEditorControls(false)
+		} else {
+			self.showPhotoEditorControls(true)
+		}
+	}
+	
+	func showPhotoEditorControls(shouldShow:Bool) {
+		imageContainerView.hidden = !shouldShow
+		addTextButton.hidden = !shouldShow
+		saveButton.hidden = !shouldShow
+		createPhotoPostButton.hidden = shouldShow
 	}
 	
 	func addTapGestureRecognizer() {
@@ -58,13 +73,15 @@ class PhotoEditorViewController: UIViewController {
 	@IBAction func saveButtonTapped(sender: UIButton) {
 
 		UIImageWriteToSavedPhotosAlbum(self.imageFromContainer(), self, "image:hasBeenSavedWithError:contextInfo:", nil)
+		self.showPhotoEditorControls(false)
+		photo = nil
+		textField?.text = nil 
 	}
 	
 	func image(image:UIImage , hasBeenSavedWithError error: NSError , contextInfo:UnsafePointer<Void>) {
 		
 		if error.code != 0 {
 			print("Error occured when saving image with domain: \(error.domain) and userinfo: \(error.userInfo)")
-			dismissViewControllerAnimated(true, completion: nil)
 		} else {
 			self.showSavedPhotoAlert(image)
 		}
@@ -73,7 +90,7 @@ class PhotoEditorViewController: UIViewController {
 	func showSavedPhotoAlert(image:UIImage) {
 		
 		let successAlert = UIAlertController(title: "Successfully Saved", message: "There is a new photo in your library.", preferredStyle: .Alert)
-		let doneAction = UIAlertAction(title: "OK", style: .Default, handler: { _ in self.dismissViewControllerAnimated(true, completion: nil)})
+		let doneAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
 		let shareAction = UIAlertAction(title: "Share", style: .Default, handler: { _ in self.showShareMenu(image)})
 		successAlert.addAction(doneAction)
 		successAlert.addAction(shareAction)
@@ -105,5 +122,63 @@ extension PhotoEditorViewController : UITextFieldDelegate {
 	
 		textField.resignFirstResponder()
 		return true
+	}
+}
+
+extension PhotoEditorViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	
+	@IBAction func showPhotoMenu(sender: UIButton) {
+		
+		/***
+		Create an alertController with no title and no message
+		Configure three buttons for the photo menu
+		Add the actions to the alertController
+		Present the photo menu
+		***/
+		let photoMenuController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+		
+		let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: { _ in print("photo menu cancelled")})
+		let takePhotoAction = UIAlertAction(title: "Use Camera", style: .Default, handler: { _ in self.useCamera()})
+		let chooseFromLibraryAction = UIAlertAction(title: "Choose From Library", style: .Default, handler: {_ in self.openPhotoLibrary()})
+		
+		photoMenuController.addAction(cancelAction)
+		photoMenuController.addAction(takePhotoAction)
+		photoMenuController.addAction(chooseFromLibraryAction)
+		
+		presentViewController(photoMenuController, animated: true, completion: nil)
+	}
+	
+	func useCamera() {
+		if UIImagePickerController.isSourceTypeAvailable(.Camera) {
+			let imagePicker = UIImagePickerController()
+			imagePicker.sourceType = .Camera
+			imagePicker.delegate = self
+			imagePicker.allowsEditing = true
+			presentViewController(imagePicker, animated: true, completion: nil)
+		}
+	}
+	
+	func openPhotoLibrary() {
+		if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+			let imagePicker = UIImagePickerController()
+			imagePicker.sourceType = .PhotoLibrary
+			imagePicker.delegate = self
+			imagePicker.allowsEditing = true
+			presentViewController(imagePicker, animated: true, completion: nil)
+		}
+	}
+	
+	func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+		dismissViewControllerAnimated(true, completion: nil)
+	}
+	
+	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+		
+		dismissViewControllerAnimated(true, completion: nil)
+		
+		if let newImage = info[UIImagePickerControllerEditedImage] {
+			
+			photo = newImage as? UIImage
+		}
 	}
 }
