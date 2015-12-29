@@ -67,6 +67,7 @@ extension PhotoChallengeViewController : UIImagePickerControllerDelegate, UINavi
 	}
 	
 	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+		
 		dismissViewControllerAnimated(true, completion: nil)
 		
 		if let newImage = info[UIImagePickerControllerEditedImage] {
