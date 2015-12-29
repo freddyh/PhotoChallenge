@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Photo Challenge View Controller-->
@@ -39,6 +40,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eAk-Hi-IgO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="444" y="215"/>
+        </scene>
+        <!--Photo Editor View Controller-->
+        <scene sceneID="5be-16-Quc">
+            <objects>
+                <viewController storyboardIdentifier="PhotoEditorViewController" id="G8g-an-O9A" customClass="PhotoEditorViewController" customModule="PhotoChallenge" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="f3g-5I-lGc"/>
+                        <viewControllerLayoutGuide type="bottom" id="QdZ-W2-LPl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5Uy-8H-0P5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulg-qn-HLc" userLabel="ContainerView">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wip-cb-nDQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="wip-cb-nDQ" firstAttribute="top" secondItem="ulg-qn-HLc" secondAttribute="top" id="Mrc-W2-0Rt"/>
+                                    <constraint firstItem="wip-cb-nDQ" firstAttribute="leading" secondItem="ulg-qn-HLc" secondAttribute="leading" id="O3P-Ij-531"/>
+                                    <constraint firstAttribute="trailing" secondItem="wip-cb-nDQ" secondAttribute="trailing" id="Tsa-H3-Eu4"/>
+                                    <constraint firstAttribute="bottom" secondItem="wip-cb-nDQ" secondAttribute="bottom" id="qu9-HY-398"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lc2-VI-Upa">
+                                <rect key="frame" x="527" y="28" width="61" height="30"/>
+                                <state key="normal" title="Add Text"/>
+                                <connections>
+                                    <action selector="addTextFieldButton:" destination="G8g-an-O9A" eventType="touchUpInside" id="Qan-1B-wfN"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lc2-VI-Upa" firstAttribute="top" secondItem="f3g-5I-lGc" secondAttribute="bottom" constant="8" symbolic="YES" id="4li-Zo-dzl"/>
+                            <constraint firstAttribute="trailing" secondItem="ulg-qn-HLc" secondAttribute="trailing" id="5T6-0p-GBP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lc2-VI-Upa" secondAttribute="trailing" constant="-8" id="CkK-Gn-lel"/>
+                            <constraint firstItem="ulg-qn-HLc" firstAttribute="leading" secondItem="5Uy-8H-0P5" secondAttribute="leading" id="UG8-AU-KvZ"/>
+                            <constraint firstItem="ulg-qn-HLc" firstAttribute="top" secondItem="f3g-5I-lGc" secondAttribute="bottom" id="oIg-d8-cQF"/>
+                            <constraint firstItem="ulg-qn-HLc" firstAttribute="bottom" secondItem="QdZ-W2-LPl" secondAttribute="top" id="r4j-1e-Und"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addTextButton" destination="lc2-VI-Upa" id="Ytj-9T-5NU"/>
+                        <outlet property="imageContainerView" destination="ulg-qn-HLc" id="uF3-eo-tgn"/>
+                        <outlet property="imageView" destination="wip-cb-nDQ" id="nRr-1D-WR1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bs9-44-u00" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="444" y="913"/>
         </scene>
     </scenes>
 </document>

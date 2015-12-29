@@ -12,6 +12,7 @@
 		464285241C31B1B8002270BE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 464285221C31B1B8002270BE /* Main.storyboard */; };
 		464285261C31B1B8002270BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 464285251C31B1B8002270BE /* Assets.xcassets */; };
 		464285291C31B1B8002270BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 464285271C31B1B8002270BE /* LaunchScreen.storyboard */; };
+		464285311C31CB83002270BE /* PhotoEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464285301C31CB83002270BE /* PhotoEditorViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		464285251C31B1B8002270BE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		464285281C31B1B8002270BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4642852A1C31B1B8002270BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		464285301C31CB83002270BE /* PhotoEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoEditorViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +57,12 @@
 			isa = PBXGroup;
 			children = (
 				4642851E1C31B1B8002270BE /* AppDelegate.swift */,
-				464285201C31B1B8002270BE /* PhotoChallengeViewController.swift */,
-				464285221C31B1B8002270BE /* Main.storyboard */,
 				464285251C31B1B8002270BE /* Assets.xcassets */,
-				464285271C31B1B8002270BE /* LaunchScreen.storyboard */,
 				4642852A1C31B1B8002270BE /* Info.plist */,
+				464285271C31B1B8002270BE /* LaunchScreen.storyboard */,
+				464285221C31B1B8002270BE /* Main.storyboard */,
+				464285201C31B1B8002270BE /* PhotoChallengeViewController.swift */,
+				464285301C31CB83002270BE /* PhotoEditorViewController.swift */,
 			);
 			path = PhotoChallenge;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 			files = (
 				464285211C31B1B8002270BE /* PhotoChallengeViewController.swift in Sources */,
 				4642851F1C31B1B8002270BE /* AppDelegate.swift in Sources */,
+				464285311C31CB83002270BE /* PhotoEditorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,6 +289,7 @@
 				4642852F1C31B1B8002270BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
