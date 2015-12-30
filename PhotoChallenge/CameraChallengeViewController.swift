@@ -43,6 +43,9 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
+        /***
+        Video that is being displayed should fill the screen
+        ***/
 		previewLayer?.frame = cameraView.bounds
 	}
 	
@@ -125,7 +128,6 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 					let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
 					let dataProvider = CGDataProviderCreateWithCFData(imageData)
 					let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
-					
 					let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
 					
 					self.imageEditorView = ImageEditor(sourceView: self.view, originalImage: image)
