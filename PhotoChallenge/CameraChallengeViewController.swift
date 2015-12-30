@@ -118,6 +118,10 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 				
 				if sampleBuffer != nil {
 					
+                    /***
+                     sampleBuffer contains data from the camera that is converted to UIImage
+                     Pass the UIImage to the imageEditor
+                    ***/
 					let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
 					let dataProvider = CGDataProviderCreateWithCFData(imageData)
 					let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
