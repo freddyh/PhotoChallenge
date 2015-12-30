@@ -17,12 +17,19 @@ One tap will take a photo and open the photo in the ImageEditor
 
 class CameraChallengeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    
 	@IBOutlet weak var cameraView: UIView!
 	
+
+    /***
+     AVFoundation Properties
+    ***/
 	var captureSession: AVCaptureSession?
 	var stillImageOutput: AVCaptureStillImageOutput?
 	var previewLayer: AVCaptureVideoPreviewLayer?
-	var isEditingPhoto: Bool = false
+
+    
+    var isEditingPhoto: Bool = false
 	var imageEditorView: ImageEditor!
 	
     override func viewDidLoad() {
@@ -75,7 +82,7 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 					captureSession?.addOutput(stillImageOutput)
 					
 					/***
-					
+					Display video as it being captured by the input device
 					***/
 					previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 					previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
@@ -132,20 +139,21 @@ extension CameraChallengeViewController : ImageEditorDelegate {
 		imageEditorView = nil
 		isEditingPhoto = false
 	}
-	
-	func imageEditorWillOpen() {
 		
-	}
-	
 	func imageEditorDidSaveImage(image:UIImage) {
 		self.showSavedPhotoAlert(image)
 	}
 	
 	func showSavedPhotoAlert(image:UIImage) {
 		
+        /***
+         Show an alert that confirms the photo was saved and give an option to share the photo
+         If user pressed "Share" then the image is passed to a UIActivityViewController
+        ***/
 		let successAlert = UIAlertController(title: "Successfully Saved", message: "There is a new photo in your library.", preferredStyle: .Alert)
 		let doneAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
 		let shareAction = UIAlertAction(title: "Share", style: .Default, handler: { _ in self.showShareMenu(image)})
+        
 		successAlert.addAction(doneAction)
 		successAlert.addAction(shareAction)
 		
