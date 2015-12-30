@@ -58,12 +58,12 @@
                                     <action selector="showPhotoMenu:" destination="G8g-an-O9A" eventType="touchUpInside" id="5u7-gY-6HS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lc2-VI-Upa">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lc2-VI-Upa">
                                 <rect key="frame" x="508" y="28" width="80" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Htj-GW-Pxy"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <state key="normal" title="Add Text"/>
                                 <connections>
                                     <action selector="addTextFieldButton:" destination="G8g-an-O9A" eventType="touchUpInside" id="Qan-1B-wfN"/>

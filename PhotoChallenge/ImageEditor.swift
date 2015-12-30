@@ -47,22 +47,20 @@ class ImageEditor: NSObject {
 		imageView.image = originalImage
 		view.addSubview(imageView)
 		
-
-		
 		textLabelsArray = []
 		
 		delegate?.imageEditorWillOpen()
 		self.setupButtons()
-		self.setupTextField()
 	}
 	
-	func setupTextField() {
+	func showTextField() {
 		
 		textField = UITextField(frame:CGRectMake(0, view.bounds.height / 2.0 - 8.0, view.bounds.width, 40))
-		textField.backgroundColor = UIColor.grayColor()
+		textField.backgroundColor = UIColor.lightGrayColor()
 		textField.becomeFirstResponder()
 		textField.returnKeyType = .Done
 		textField.delegate = self
+		view.addSubview(textField)
 	}
 	
 	func setupButtons() {
@@ -104,11 +102,7 @@ class ImageEditor: NSObject {
 	}
 	
 	func insertText() {
-		
-		view.addSubview(textField)
-		
-		//add UILabel to self.textLabels
-		
+		self.showTextField()
 	}
 	
 	func image(image:UIImage, didSaveWithError error:NSError, contextInfo:UnsafePointer<Void>) {
@@ -137,6 +131,7 @@ class ImageEditor: NSObject {
 }
 
 extension ImageEditor : UITextFieldDelegate {
+	
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
 		
 		textField.removeFromSuperview()
@@ -147,6 +142,10 @@ extension ImageEditor : UITextFieldDelegate {
 	
 	func addTextLabelWithText(text:String) {
 		let label = UILabel()
+		label.backgroundColor = UIColor.lightGrayColor()
+		label.textAlignment = .Center
+		label.font = UIFont(name: "Futura", size: 14.0)
+		label.textColor = UIColor.whiteColor()
 		label.text = text
 		label.sizeToFit()
 		label.center = view.center
