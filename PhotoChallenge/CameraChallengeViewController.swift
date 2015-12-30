@@ -103,17 +103,32 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 extension CameraChallengeViewController : ImageEditorDelegate {
 	
 	func imageEditorDidCancel() {
-		print("did cancel")
-		self.imageEditorView = nil
-		self.isEditingPhoto = false
+		imageEditorView = nil
+		isEditingPhoto = false
 	}
 	
 	func imageEditorWillOpen() {
-		print("will open")
 		
 	}
 	
-	func imageEditorDidSaveImage() {
-		print("did save image")
+	func imageEditorDidSaveImage(image:UIImage) {
+		self.showSavedPhotoAlert(image)
+	}
+	
+	func showSavedPhotoAlert(image:UIImage) {
+		
+		let successAlert = UIAlertController(title: "Successfully Saved", message: "There is a new photo in your library.", preferredStyle: .Alert)
+		let doneAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+		let shareAction = UIAlertAction(title: "Share", style: .Default, handler: { _ in self.showShareMenu(image)})
+		successAlert.addAction(doneAction)
+		successAlert.addAction(shareAction)
+		
+		presentViewController(successAlert, animated: true, completion: nil)
+	}
+	
+	func showShareMenu(image:UIImage) {
+		
+		let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+		presentViewController(activityController, animated: true, completion: nil)
 	}
 }
