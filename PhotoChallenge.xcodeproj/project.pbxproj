@@ -14,6 +14,7 @@
 		4686176C1C3327DE00F569BE /* CameraChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4686176B1C3327DE00F569BE /* CameraChallengeViewController.swift */; };
 		468617901C3353D300F569BE /* ImageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4686178F1C3353D300F569BE /* ImageEditor.swift */; };
 		468617921C33AB6200F569BE /* PhotoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468617911C33AB6200F569BE /* PhotoLabel.swift */; };
+		468621A31C34765000CA747D /* CameraCaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468621A21C34765000CA747D /* CameraCaptureButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		4686176B1C3327DE00F569BE /* CameraChallengeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraChallengeViewController.swift; sourceTree = "<group>"; };
 		4686178F1C3353D300F569BE /* ImageEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEditor.swift; sourceTree = "<group>"; };
 		468617911C33AB6200F569BE /* PhotoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLabel.swift; sourceTree = "<group>"; };
+		468621A21C34765000CA747D /* CameraCaptureButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCaptureButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				4686176B1C3327DE00F569BE /* CameraChallengeViewController.swift */,
 				4686178F1C3353D300F569BE /* ImageEditor.swift */,
 				468617911C33AB6200F569BE /* PhotoLabel.swift */,
+				468621A21C34765000CA747D /* CameraCaptureButton.swift */,
 			);
 			path = PhotoChallenge;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4686176C1C3327DE00F569BE /* CameraChallengeViewController.swift in Sources */,
+				468621A31C34765000CA747D /* CameraCaptureButton.swift in Sources */,
 				468617921C33AB6200F569BE /* PhotoLabel.swift in Sources */,
 				4642851F1C31B1B8002270BE /* AppDelegate.swift in Sources */,
 				468617901C3353D300F569BE /* ImageEditor.swift in Sources */,

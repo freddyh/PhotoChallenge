@@ -19,6 +19,7 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 
     
 	@IBOutlet weak var cameraView: UIView!
+	@IBOutlet weak var captureButton: CameraCaptureButton!
 	
     /***
      AVFoundation Properties
@@ -34,9 +35,6 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		let tapGesture = UITapGestureRecognizer(target: self, action: "tappedScreen")
-		tapGesture.cancelsTouchesInView = false
-		self.view.addGestureRecognizer(tapGesture)
     }
 	
 	override func viewDidAppear(animated: Bool) {
@@ -89,7 +87,8 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 					previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 					previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
 					previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
-					cameraView.layer.addSublayer(previewLayer!)
+					cameraView.layer.insertSublayer(previewLayer!, below: captureButton.layer)
+
 					captureSession?.startRunning()
 				}
 			}
@@ -100,14 +99,14 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 		
 	}
 	
-	func tappedScreen() {
+	
+	@IBAction func tappedCaptureButton(sender: CameraCaptureButton) {
 		
 		if !isEditingPhoto {
 			
 			self.takePhoto()
 			self.isEditingPhoto = true
 		}
-		
 	}
 	
 	func takePhoto() {

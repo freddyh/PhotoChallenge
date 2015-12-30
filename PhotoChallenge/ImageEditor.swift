@@ -115,6 +115,7 @@ class ImageEditor: NSObject {
 	
 	func beginActivityIndicatorView() {
 		
+		saveButton.enabled = false
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
 		activityIndicator.frame = CGRectMake(view.bounds.size.width / 2.0 - Constants.buttonSize, view.bounds.size.height / 2.0 - Constants.buttonSize, Constants.buttonSize, Constants.buttonSize)
 		activityIndicator.center = view.center
@@ -132,6 +133,7 @@ class ImageEditor: NSObject {
 		if error.code == 0 {
 			activityIndicator.stopAnimating()
 			activityIndicator.removeFromSuperview()
+			saveButton.enabled = true
 			delegate?.imageEditorDidSaveImage(image)
 		} else {
 			print("Error Code: \(error.code) Error User Info: \(error.userInfo)")

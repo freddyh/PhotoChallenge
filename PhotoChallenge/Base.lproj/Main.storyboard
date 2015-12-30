@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XjF-G8-VbH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XjF-G8-VbH">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Camera Challenge View Controller-->
@@ -19,7 +20,23 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvb-Lf-wQm">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP9-9U-HKk" customClass="CameraCaptureButton" customModule="PhotoChallenge" customModuleProvider="target">
+                                        <rect key="frame" x="275" y="522" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="G31-M7-IP5"/>
+                                            <constraint firstAttribute="height" constant="50" id="Pm4-7Y-mZ3"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="tappedCaptureButton:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Wse-Wx-nir"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="KP9-9U-HKk" firstAttribute="centerX" secondItem="xvb-Lf-wQm" secondAttribute="centerX" id="cpK-XB-SE9"/>
+                                    <constraint firstItem="KP9-9U-HKk" firstAttribute="bottom" secondItem="xvb-Lf-wQm" secondAttribute="bottomMargin" constant="-20" id="jvq-pK-GsW"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -32,6 +49,7 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="xvb-Lf-wQm" id="L8D-OJ-FKi"/>
+                        <outlet property="captureButton" destination="KP9-9U-HKk" id="dKZ-29-GuR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hoR-mf-Rv7" userLabel="First Responder" sceneMemberID="firstResponder"/>
