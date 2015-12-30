@@ -13,15 +13,15 @@ struct Constants {
 	static let space:CGFloat = 8.0
 }
 
-protocol ImageEditorDelegate {
+protocol ImageEditorDelegate : class {
 	func imageEditorDidCancel()
-	func imageEditorWillOpen()
 	func imageEditorDidSaveImage(image:UIImage)
 }
 
 class ImageEditor: NSObject {
 
-	var delegate: ImageEditorDelegate?
+	weak var delegate: ImageEditorDelegate?
+    
 	var originView: UIView!
 	var view: UIView!
 	var imageView: UIImageView!
@@ -56,7 +56,6 @@ class ImageEditor: NSObject {
 		tapRecognizer?.cancelsTouchesInView = false
 		view.addGestureRecognizer(tapRecognizer!)
 		
-		delegate?.imageEditorWillOpen()
 		self.setupButtons()
 	}
 	
@@ -101,6 +100,18 @@ class ImageEditor: NSObject {
 		self.beginActivityIndicatorView()
 		UIImageWriteToSavedPhotosAlbum(self.getEditedImage(), self, "image:didSaveWithError:contextInfo:", nil)
 	}
+    
+    /***
+     Returns an image with contents of imageView and all subviews in the hierarchy
+    ***/
+    func getEditedImage() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(imageView.frame.size, true, 0)
+        imageView.drawViewHierarchyInRect(imageView.bounds, afterScreenUpdates: true)
+        let result = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return result
+    }
 	
 	func beginActivityIndicatorView() {
 		
@@ -111,13 +122,6 @@ class ImageEditor: NSObject {
 		activityIndicator.startAnimating()
 	}
 	
-	func cancelEditing() {
-		delegate?.imageEditorDidCancel()
-	}
-	
-	func insertText() {
-		self.showTextField()
-	}
 	
 	/***
 	Callback after photo is saved to camera roll
@@ -135,17 +139,13 @@ class ImageEditor: NSObject {
 		
 	}
 	
-	/***
-	Returns the imageView with any text that has been added as subviews
-	***/
-	func getEditedImage() -> UIImage {
-		UIGraphicsBeginImageContextWithOptions(imageView.frame.size, true, 0)
-		imageView.drawViewHierarchyInRect(imageView.bounds, afterScreenUpdates: true)
-		let result = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-		
-		return result
-	}
+    func cancelEditing() {
+        delegate?.imageEditorDidCancel()
+    }
+    
+    func insertText() {
+        self.showTextField()
+    }
 	
 	func dismissKeyboard() {
 		view.endEditing(true)
@@ -169,6 +169,9 @@ extension ImageEditor : UITextFieldDelegate {
 		self.removeTextField()
 	}
 	
+    /***
+     Add a subclass of UILabel to the imageView hierarchy
+    ***/
 	func removeTextField() {
 		self.addTextLabelWithText(textField.text!)
 		textField.removeFromSuperview()

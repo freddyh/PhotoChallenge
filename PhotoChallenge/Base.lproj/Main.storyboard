@@ -1,102 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XjF-G8-VbH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XjF-G8-VbH">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
     </dependencies>
     <scenes>
-        <!--Photo Editor View Controller-->
-        <scene sceneID="5be-16-Quc">
-            <objects>
-                <viewController storyboardIdentifier="PhotoEditorViewController" id="G8g-an-O9A" customClass="PhotoEditorViewController" customModule="PhotoChallenge" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="f3g-5I-lGc"/>
-                        <viewControllerLayoutGuide type="bottom" id="QdZ-W2-LPl"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="5Uy-8H-0P5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulg-qn-HLc" userLabel="ContainerView">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wip-cb-nDQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="580"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="wip-cb-nDQ" firstAttribute="top" secondItem="ulg-qn-HLc" secondAttribute="top" id="Mrc-W2-0Rt"/>
-                                    <constraint firstItem="wip-cb-nDQ" firstAttribute="leading" secondItem="ulg-qn-HLc" secondAttribute="leading" id="O3P-Ij-531"/>
-                                    <constraint firstAttribute="trailing" secondItem="wip-cb-nDQ" secondAttribute="trailing" id="Tsa-H3-Eu4"/>
-                                    <constraint firstAttribute="bottom" secondItem="wip-cb-nDQ" secondAttribute="bottom" id="qu9-HY-398"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ym0-1O-Yyn">
-                                <rect key="frame" x="12" y="28" width="102" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="78" id="0bW-o1-22o"/>
-                                    <constraint firstAttribute="height" constant="50" id="9Tv-RC-0jf"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Save Photo"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="0bW-o1-22o"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="saveButtonTapped:" destination="G8g-an-O9A" eventType="touchUpInside" id="WGF-N1-dqn"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6di-cp-WBc">
-                                <rect key="frame" x="188" y="279" width="223" height="42"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Create A Photo Post"/>
-                                <connections>
-                                    <action selector="showPhotoMenu:" destination="G8g-an-O9A" eventType="touchUpInside" id="5u7-gY-6HS"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lc2-VI-Upa">
-                                <rect key="frame" x="508" y="28" width="80" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="Htj-GW-Pxy"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
-                                <state key="normal" title="Add Text"/>
-                                <connections>
-                                    <action selector="addTextFieldButton:" destination="G8g-an-O9A" eventType="touchUpInside" id="Qan-1B-wfN"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="lc2-VI-Upa" firstAttribute="top" secondItem="f3g-5I-lGc" secondAttribute="bottom" constant="8" id="4li-Zo-dzl"/>
-                            <constraint firstAttribute="trailing" secondItem="ulg-qn-HLc" secondAttribute="trailing" id="5T6-0p-GBP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="lc2-VI-Upa" secondAttribute="trailing" constant="-8" id="CkK-Gn-lel"/>
-                            <constraint firstItem="6di-cp-WBc" firstAttribute="centerY" secondItem="5Uy-8H-0P5" secondAttribute="centerY" id="Htu-cU-U6E"/>
-                            <constraint firstItem="Ym0-1O-Yyn" firstAttribute="leading" secondItem="5Uy-8H-0P5" secondAttribute="leadingMargin" constant="-8" id="LpQ-VS-aRk"/>
-                            <constraint firstItem="Ym0-1O-Yyn" firstAttribute="top" secondItem="f3g-5I-lGc" secondAttribute="bottom" constant="8" id="MKL-F1-cl1"/>
-                            <constraint firstItem="6di-cp-WBc" firstAttribute="centerX" secondItem="5Uy-8H-0P5" secondAttribute="centerX" id="S2w-qu-QtR"/>
-                            <constraint firstItem="ulg-qn-HLc" firstAttribute="leading" secondItem="5Uy-8H-0P5" secondAttribute="leading" id="UG8-AU-KvZ"/>
-                            <constraint firstItem="ulg-qn-HLc" firstAttribute="top" secondItem="f3g-5I-lGc" secondAttribute="bottom" id="oIg-d8-cQF"/>
-                            <constraint firstItem="ulg-qn-HLc" firstAttribute="bottom" secondItem="QdZ-W2-LPl" secondAttribute="top" id="r4j-1e-Und"/>
-                        </constraints>
-                    </view>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="addTextButton" destination="lc2-VI-Upa" id="Ytj-9T-5NU"/>
-                        <outlet property="createPhotoPostButton" destination="6di-cp-WBc" id="OZ1-US-zhE"/>
-                        <outlet property="imageContainerView" destination="ulg-qn-HLc" id="uF3-eo-tgn"/>
-                        <outlet property="imageView" destination="wip-cb-nDQ" id="nRr-1D-WR1"/>
-                        <outlet property="saveButton" destination="Ym0-1O-Yyn" id="Ky8-zx-eq3"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="bs9-44-u00" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="444" y="913"/>
-        </scene>
         <!--Camera Challenge View Controller-->
         <scene sceneID="tx7-MB-2yE">
             <objects>
