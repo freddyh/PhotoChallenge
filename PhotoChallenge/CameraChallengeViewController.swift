@@ -9,6 +9,12 @@
 import UIKit
 import AVFoundation
 
+
+/***
+This is the initial view controller whose view is a feed from the camera
+One tap will take a photo and open the photo in the ImageEditor
+***/
+
 class CameraChallengeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
 	@IBOutlet weak var cameraView: UIView!
@@ -36,16 +42,31 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		
+		
+		/***
+		Capture session coordinates the flow of data between inputs and outputs
+		Session Preset is a capture setting for 1080p quality video
+		1920pixels by 1080pixels
+		***/
 		captureSession = AVCaptureSession()
 		captureSession?.sessionPreset = AVCaptureSessionPreset1920x1080
 		
 		let backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
 		
+		
+		/***
+		Checks if the session is capable of adding the inputs and outputs
+		If true, then create a preview layer that serves as a live feed of the back camera
+		***/
 		do {
+			
 			let input = try AVCaptureDeviceInput(device: backCamera)
 			if ((captureSession?.canAddInput(input)) != nil) {
 				captureSession?.addInput(input)
 				
+				/***
+				Specify the type of output (still image) and format (jpeg)
+				***/
 				stillImageOutput = AVCaptureStillImageOutput()
 				stillImageOutput?.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
 				
@@ -53,6 +74,9 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 					
 					captureSession?.addOutput(stillImageOutput)
 					
+					/***
+					
+					***/
 					previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 					previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
 					previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
@@ -61,8 +85,8 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 				}
 			}
 			
-		} catch {
-			
+		} catch let error {
+			print("Error: \(error)")
 		}
 		
 	}
@@ -70,6 +94,7 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 	func tappedScreen() {
 		
 		if !isEditingPhoto {
+			
 			self.takePhoto()
 			self.isEditingPhoto = true
 		}
