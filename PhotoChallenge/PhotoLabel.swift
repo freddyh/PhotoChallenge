@@ -22,7 +22,9 @@ class PhotoLabel: UILabel {
 		self.addGestureRecognizer(panRecognizer!)
 		self.addGestureRecognizer(doubleTapRecognizer!)
 		
-		
+		/***
+		Center the text and change the font name, size, and color
+		***/
 		textAlignment = .Center
 		font = UIFont(name: "Futura", size: 20.0)
 		textColor = UIColor.whiteColor()
@@ -32,6 +34,9 @@ class PhotoLabel: UILabel {
 		super.init(coder: aDecoder)
 	}
 	
+	/***
+	Makes the label draggable
+	***/
 	func detectPan() {
 		let translation = panRecognizer?.translationInView(self)
 		self.center.x += (translation?.x)!
@@ -41,6 +46,10 @@ class PhotoLabel: UILabel {
 		print("detected Pan")
 	}
 	
+	
+	/***
+	Double tap will delete the label from the photo
+	***/
 	func detectedDoubleTap() {
 		self.removeFromSuperview()
 	}

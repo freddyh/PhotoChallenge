@@ -37,6 +37,9 @@ class ImageEditor: NSObject {
 		super.init()
 	}
 	
+	/***
+	Init will set up the view hierarchy, position buttons on the screen,
+	***/
 	init(sourceView: UIView, originalImage: UIImage) {
 		super.init()
 		
@@ -57,6 +60,9 @@ class ImageEditor: NSObject {
 		self.setupButtons()
 	}
 	
+	/***
+	Puts the text field on the center of the screen with keyboard
+	***/
 	func showTextField() {
 		
 		textField = UITextField(frame:CGRectMake(0, view.bounds.height / 2.0 - 8.0, view.bounds.width, 40))
@@ -66,6 +72,7 @@ class ImageEditor: NSObject {
 		textField.delegate = self
 		view.addSubview(textField)
 	}
+	
 	
 	func setupButtons() {
 		
@@ -86,6 +93,9 @@ class ImageEditor: NSObject {
 		view.addSubview(insertTextViewButton)
 	}
 	
+	/***
+	Starts the loading wheel and saves the photo
+	***/
 	func saveImage() {
 		
 		self.beginActivityIndicatorView()
@@ -109,6 +119,10 @@ class ImageEditor: NSObject {
 		self.showTextField()
 	}
 	
+	/***
+	Callback after photo is saved to camera roll
+	Stops the spinning wheel and notifies delegate
+	***/
 	func image(image:UIImage, didSaveWithError error:NSError, contextInfo:UnsafePointer<Void>) {
 		
 		if error.code == 0 {
@@ -121,6 +135,9 @@ class ImageEditor: NSObject {
 		
 	}
 	
+	/***
+	Returns the imageView with any text that has been added as subviews
+	***/
 	func getEditedImage() -> UIImage {
 		UIGraphicsBeginImageContextWithOptions(imageView.frame.size, true, 0)
 		imageView.drawViewHierarchyInRect(imageView.bounds, afterScreenUpdates: true)
