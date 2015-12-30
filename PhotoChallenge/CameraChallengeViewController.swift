@@ -23,6 +23,7 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
         super.viewDidLoad()
 		
 		let tapGesture = UITapGestureRecognizer(target: self, action: "tappedScreen")
+		tapGesture.cancelsTouchesInView = false
 		self.view.addGestureRecognizer(tapGesture)
     }
 	

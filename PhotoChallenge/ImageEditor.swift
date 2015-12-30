@@ -28,9 +28,11 @@ class ImageEditor: NSObject {
 	var saveButton: UIButton!
 	var cancelButton: UIButton!
 	var insertTextViewButton: UIButton!
-	var textLabelsArray: Array<UILabel>!
+	var textLabelsArray: Array<PhotoLabel>!
 	var activityIndicator: UIActivityIndicatorView!
 	var textField: UITextField!
+	
+	var tapRecognizer:UITapGestureRecognizer?
 	
 	override init() {
 		super.init()
@@ -45,9 +47,14 @@ class ImageEditor: NSObject {
 		
 		imageView = UIImageView(frame: originView.frame)
 		imageView.image = originalImage
+		imageView.userInteractionEnabled = true
 		view.addSubview(imageView)
 		
 		textLabelsArray = []
+		
+		tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+		tapRecognizer?.cancelsTouchesInView = false
+		view.addGestureRecognizer(tapRecognizer!)
 		
 		delegate?.imageEditorWillOpen()
 		self.setupButtons()
@@ -82,6 +89,12 @@ class ImageEditor: NSObject {
 		view.addSubview(insertTextViewButton)
 	}
 	
+	func saveImage() {
+		
+		self.beginActivityIndicatorView()
+		UIImageWriteToSavedPhotosAlbum(self.getEditedImage(), self, "image:didSaveWithError:contextInfo:", nil)
+	}
+	
 	func beginActivityIndicatorView() {
 		
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
@@ -89,12 +102,6 @@ class ImageEditor: NSObject {
 		activityIndicator.center = view.center
 		view.addSubview(activityIndicator)
 		activityIndicator.startAnimating()
-	}
-	
-	func saveImage() {
-		
-		self.beginActivityIndicatorView()
-		UIImageWriteToSavedPhotosAlbum(self.getEditedImage(), self, "image:didSaveWithError:contextInfo:", nil)
 	}
 	
 	func cancelEditing() {
@@ -111,6 +118,8 @@ class ImageEditor: NSObject {
 			activityIndicator.stopAnimating()
 			activityIndicator.removeFromSuperview()
 			delegate?.imageEditorDidSaveImage(image)
+		} else {
+			print("Error Code: \(error.code) Error User Info: \(error.userInfo)")
 		}
 		
 	}
@@ -124,6 +133,11 @@ class ImageEditor: NSObject {
 		return result
 	}
 	
+	func dismissKeyboard() {
+		
+		view.endEditing(true)
+	}
+	
 	deinit {
 		view.removeFromSuperview()
 		view = nil
@@ -133,19 +147,22 @@ class ImageEditor: NSObject {
 extension ImageEditor : UITextFieldDelegate {
 	
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
-		
-		textField.removeFromSuperview()
-		self.addTextLabelWithText(textField.text!)
-
+		self.removeTextField()
 		return true
 	}
 	
+	func textFieldDidEndEditing(textField: UITextField) {
+		
+		self.removeTextField()
+	}
+	
+	func removeTextField() {
+		self.addTextLabelWithText(textField.text!)
+		textField.removeFromSuperview()
+	}
+	
 	func addTextLabelWithText(text:String) {
-		let label = UILabel()
-		label.backgroundColor = UIColor.lightGrayColor()
-		label.textAlignment = .Center
-		label.font = UIFont(name: "Futura", size: 14.0)
-		label.textColor = UIColor.whiteColor()
+		let label = PhotoLabel()
 		label.text = text
 		label.sizeToFit()
 		label.center = view.center
