@@ -11,15 +11,16 @@ import UIKit
 class PhotoLabel: UILabel {
 	
 	var panRecognizer: UIPanGestureRecognizer?
-	var tapRecognizer: UITapGestureRecognizer?
+	var doubleTapRecognizer: UITapGestureRecognizer?
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		userInteractionEnabled = true
 		panRecognizer = UIPanGestureRecognizer(target: self, action: "detectPan")
-		tapRecognizer = UITapGestureRecognizer(target: self, action: "detectTap")
+		doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "detectedDoubleTap")
+		doubleTapRecognizer?.numberOfTapsRequired = 2
 		self.addGestureRecognizer(panRecognizer!)
-		self.addGestureRecognizer(tapRecognizer!)
+		self.addGestureRecognizer(doubleTapRecognizer!)
 		
 		
 		textAlignment = .Center
@@ -40,7 +41,7 @@ class PhotoLabel: UILabel {
 		print("detected Pan")
 	}
 	
-	func detectTap() {
-		print("detect tap")
+	func detectedDoubleTap() {
+		self.removeFromSuperview()
 	}
 }

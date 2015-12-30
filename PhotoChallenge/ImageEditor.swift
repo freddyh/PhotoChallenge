@@ -28,7 +28,6 @@ class ImageEditor: NSObject {
 	var saveButton: UIButton!
 	var cancelButton: UIButton!
 	var insertTextViewButton: UIButton!
-	var textLabelsArray: Array<PhotoLabel>!
 	var activityIndicator: UIActivityIndicatorView!
 	var textField: UITextField!
 	
@@ -49,8 +48,6 @@ class ImageEditor: NSObject {
 		imageView.image = originalImage
 		imageView.userInteractionEnabled = true
 		view.addSubview(imageView)
-		
-		textLabelsArray = []
 		
 		tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
 		tapRecognizer?.cancelsTouchesInView = false
@@ -134,7 +131,6 @@ class ImageEditor: NSObject {
 	}
 	
 	func dismissKeyboard() {
-		
 		view.endEditing(true)
 	}
 	
@@ -147,7 +143,7 @@ class ImageEditor: NSObject {
 extension ImageEditor : UITextFieldDelegate {
 	
 	func textFieldShouldReturn(textField: UITextField) -> Bool {
-		self.removeTextField()
+		self.dismissKeyboard()
 		return true
 	}
 	
@@ -167,6 +163,5 @@ extension ImageEditor : UITextFieldDelegate {
 		label.sizeToFit()
 		label.center = view.center
 		imageView.addSubview(label)
-		textLabelsArray.append(label)
 	}
 }
