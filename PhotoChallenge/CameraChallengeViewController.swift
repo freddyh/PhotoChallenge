@@ -20,7 +20,6 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
     
 	@IBOutlet weak var cameraView: UIView!
 	
-
     /***
      AVFoundation Properties
     ***/
