@@ -1,0 +1,119 @@
+//
+//  CameraChallengeViewController.swift
+//  PhotoChallenge
+//
+//  Created by Freddy Hernandez on 12/29/15.
+//  Copyright © 2015 Freddy Hernandez. All rights reserved.
+//
+
+import UIKit
+import AVFoundation
+
+class CameraChallengeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+	@IBOutlet weak var cameraView: UIView!
+	
+	var captureSession: AVCaptureSession?
+	var stillImageOutput: AVCaptureStillImageOutput?
+	var previewLayer: AVCaptureVideoPreviewLayer?
+	var isEditingPhoto: Bool = false
+	var imageEditorView: ImageEditor!
+	
+    override func viewDidLoad() {
+        super.viewDidLoad()
+		
+		let tapGesture = UITapGestureRecognizer(target: self, action: "tappedScreen")
+		self.view.addGestureRecognizer(tapGesture)
+    }
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		previewLayer?.frame = cameraView.bounds
+	}
+	
+	override func viewWillAppear(animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		captureSession = AVCaptureSession()
+		captureSession?.sessionPreset = AVCaptureSessionPreset1920x1080
+		
+		let backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+		
+		do {
+			let input = try AVCaptureDeviceInput(device: backCamera)
+			if ((captureSession?.canAddInput(input)) != nil) {
+				captureSession?.addInput(input)
+				
+				stillImageOutput = AVCaptureStillImageOutput()
+				stillImageOutput?.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
+				
+				if captureSession?.canAddOutput(stillImageOutput) != nil {
+					
+					captureSession?.addOutput(stillImageOutput)
+					
+					previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+					previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
+					previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
+					cameraView.layer.addSublayer(previewLayer!)
+					captureSession?.startRunning()
+				}
+			}
+			
+		} catch {
+			
+		}
+		
+	}
+	
+	func tappedScreen() {
+		
+		if !isEditingPhoto {
+			self.takePhoto()
+			self.isEditingPhoto = true
+		}
+		
+	}
+	
+	func takePhoto() {
+		
+		if let videoConnection = stillImageOutput?.connectionWithMediaType(AVMediaTypeVideo) {
+			
+			videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
+			
+			stillImageOutput?.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: { (sampleBuffer, error) -> Void in
+				
+				if sampleBuffer != nil {
+					
+					let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+					let dataProvider = CGDataProviderCreateWithCFData(imageData)
+					let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
+					
+					let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+					
+					self.imageEditorView = ImageEditor(sourceView: self.view, originalImage: image)
+					self.imageEditorView.delegate = self
+				}
+			})
+		}
+	}
+
+}
+
+extension CameraChallengeViewController : ImageEditorDelegate {
+	
+	func imageEditorDidCancel() {
+		print("did cancel")
+		self.imageEditorView = nil
+		self.isEditingPhoto = false
+	}
+	
+	func imageEditorWillOpen() {
+		print("will open")
+		
+	}
+	
+	func imageEditorDidSaveImage() {
+		print("did save image")
+	}
+}
