@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="G8g-an-O9A">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="XjF-G8-VbH">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -58,12 +58,12 @@
                                     <action selector="showPhotoMenu:" destination="G8g-an-O9A" eventType="touchUpInside" id="5u7-gY-6HS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lc2-VI-Upa">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lc2-VI-Upa">
                                 <rect key="frame" x="508" y="28" width="80" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Htj-GW-Pxy"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                 <state key="normal" title="Add Text"/>
                                 <connections>
                                     <action selector="addTextFieldButton:" destination="G8g-an-O9A" eventType="touchUpInside" id="Qan-1B-wfN"/>
@@ -96,6 +96,39 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bs9-44-u00" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="444" y="913"/>
+        </scene>
+        <!--Camera Challenge View Controller-->
+        <scene sceneID="tx7-MB-2yE">
+            <objects>
+                <viewController id="XjF-G8-VbH" customClass="CameraChallengeViewController" customModule="PhotoChallenge" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Zym-kO-CpQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="bgP-kX-ZdY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9JD-9Z-ymm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvb-Lf-wQm">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="xvb-Lf-wQm" secondAttribute="trailing" id="CfV-6z-maD"/>
+                            <constraint firstItem="xvb-Lf-wQm" firstAttribute="top" secondItem="9JD-9Z-ymm" secondAttribute="top" id="EZ8-Ep-S7q"/>
+                            <constraint firstItem="xvb-Lf-wQm" firstAttribute="leading" secondItem="9JD-9Z-ymm" secondAttribute="leading" id="rGG-Cu-We4"/>
+                            <constraint firstItem="xvb-Lf-wQm" firstAttribute="bottom" secondItem="bgP-kX-ZdY" secondAttribute="top" id="yht-0W-CUF"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="xvb-Lf-wQm" id="L8D-OJ-FKi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hoR-mf-Rv7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="444" y="1586"/>
         </scene>
     </scenes>
 </document>
