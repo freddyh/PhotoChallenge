@@ -30,6 +30,7 @@ class ImageEditor: NSObject {
 	var insertTextViewButton: UIButton!
 	var textLabelsArray: Array<UILabel>!
 	var activityIndicator: UIActivityIndicatorView!
+	var textField: UITextField!
 	
 	override init() {
 		super.init()
@@ -41,33 +42,39 @@ class ImageEditor: NSObject {
 		originView = sourceView
 		view = UIView(frame: originView.frame)
 		originView.addSubview(view)
+		
 		imageView = UIImageView(frame: originView.frame)
 		imageView.image = originalImage
-		
 		view.addSubview(imageView)
+		
+
 		
 		textLabelsArray = []
 		
 		delegate?.imageEditorWillOpen()
 		self.setupButtons()
+		self.setupTextField()
+	}
+	
+	func setupTextField() {
+		
+		textField = UITextField(frame:CGRectMake(0, view.bounds.height / 2.0 - 8.0, view.bounds.width, 40))
+		textField.backgroundColor = UIColor.grayColor()
+		textField.becomeFirstResponder()
+		textField.returnKeyType = .Done
+		textField.delegate = self
 	}
 	
 	func setupButtons() {
 		
-		/****
-		bottom left - saveButton
-		****/
 		saveButton = UIButton(frame: CGRectMake(Constants.space, originView.bounds.size.height - (Constants.buttonSize + Constants.space), Constants.buttonSize, Constants.buttonSize))
 		saveButton.addTarget(self, action: "saveImage", forControlEvents: .TouchUpInside)
 		saveButton.setTitle("⬇︎", forState: .Normal)
 		
-		//top left - cancelButton
 		cancelButton = UIButton(frame: CGRectMake(Constants.space, Constants.space, Constants.buttonSize, Constants.buttonSize))
 		cancelButton.addTarget(self, action: "cancelEditing", forControlEvents: .TouchUpInside)
 		cancelButton.setTitle("⌫", forState: .Normal)
 		
-		
-		//top right - insertTextButton
 		insertTextViewButton = UIButton(frame: CGRectMake(originView.bounds.size.width - Constants.buttonSize, Constants.space, Constants.buttonSize, Constants.buttonSize))
 		insertTextViewButton.addTarget(self, action: "insertText", forControlEvents: .TouchUpInside)
 		insertTextViewButton.setTitle("🆃", forState: .Normal)
@@ -77,18 +84,19 @@ class ImageEditor: NSObject {
 		view.addSubview(insertTextViewButton)
 	}
 	
-	func initActivityIndicatorView() {
+	func beginActivityIndicatorView() {
 		
 		activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
 		activityIndicator.frame = CGRectMake(view.bounds.size.width / 2.0 - Constants.buttonSize, view.bounds.size.height / 2.0 - Constants.buttonSize, Constants.buttonSize, Constants.buttonSize)
+		activityIndicator.center = view.center
 		view.addSubview(activityIndicator)
 		activityIndicator.startAnimating()
 	}
 	
 	func saveImage() {
 		
-		self.initActivityIndicatorView()
-		UIImageWriteToSavedPhotosAlbum(self.getEditedImage(), self, "image:hasBeenSavedWithError:contextInfo:", nil)
+		self.beginActivityIndicatorView()
+		UIImageWriteToSavedPhotosAlbum(self.getEditedImage(), self, "image:didSaveWithError:contextInfo:", nil)
 	}
 	
 	func cancelEditing() {
@@ -97,13 +105,13 @@ class ImageEditor: NSObject {
 	
 	func insertText() {
 		
-		print("insert text button")
-		//create UITextField
+		view.addSubview(textField)
+		
 		//add UILabel to self.textLabels
 		
 	}
 	
-	func image(image:UIImage, hasBeenSavedWithError error:NSError, contextInfo:UnsafePointer<Void>) {
+	func image(image:UIImage, didSaveWithError error:NSError, contextInfo:UnsafePointer<Void>) {
 		
 		if error.code == 0 {
 			activityIndicator.stopAnimating()
@@ -125,5 +133,24 @@ class ImageEditor: NSObject {
 	deinit {
 		view.removeFromSuperview()
 		view = nil
+	}
+}
+
+extension ImageEditor : UITextFieldDelegate {
+	func textFieldShouldReturn(textField: UITextField) -> Bool {
+		
+		textField.removeFromSuperview()
+		self.addTextLabelWithText(textField.text!)
+
+		return true
+	}
+	
+	func addTextLabelWithText(text:String) {
+		let label = UILabel()
+		label.text = text
+		label.sizeToFit()
+		label.center = view.center
+		imageView.addSubview(label)
+		textLabelsArray.append(label)
 	}
 }
