@@ -15,11 +15,12 @@ class PhotoLabel: UILabel {
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-        
 		userInteractionEnabled = true
-		panRecognizer = UIPanGestureRecognizer(target: self, action: "detectPan")
-		doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "detectedDoubleTap")
+        
+		panRecognizer = UIPanGestureRecognizer(target: self, action: "move")
+		doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "remove")
 		doubleTapRecognizer?.numberOfTapsRequired = 2
+        
 		self.addGestureRecognizer(panRecognizer!)
 		self.addGestureRecognizer(doubleTapRecognizer!)
 		
@@ -36,7 +37,7 @@ class PhotoLabel: UILabel {
     /***
      Makes the view draggable
     ***/
-	func detectPan() {
+	func move() {
 		let translation = panRecognizer?.translationInView(self)
 		self.center.x += (translation?.x)!
 		self.center.y += (translation?.y)!
@@ -48,7 +49,7 @@ class PhotoLabel: UILabel {
     /***
      Delete if double tapped
     ***/
-	func detectedDoubleTap() {
+	func remove() {
 		self.removeFromSuperview()
 	}
 }
