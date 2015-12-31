@@ -40,7 +40,7 @@ class PhotoLabel: UILabel {
 	
 
 	/***
-	Makes the label draggable
+	Panning on the label will drag
 	***/
 	func move() {
 		let translation = panRecognizer?.translationInView(self)

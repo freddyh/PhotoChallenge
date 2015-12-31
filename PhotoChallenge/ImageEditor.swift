@@ -16,6 +16,7 @@ struct Constants {
 protocol ImageEditorDelegate : class {
 	func imageEditorDidCancel()
 	func imageEditorDidSaveImage(image:UIImage)
+	func imageEditorDidShare(image:UIImage)
 }
 
 class ImageEditor: NSObject {
@@ -27,6 +28,7 @@ class ImageEditor: NSObject {
 	var imageView: UIImageView!
 	var saveButton: UIButton!
 	var cancelButton: UIButton!
+	var shareButton: UIButton!
 	var insertTextViewButton: UIButton!
 	var activityIndicator: UIActivityIndicatorView!
 	var textField: UITextField!
@@ -86,6 +88,12 @@ class ImageEditor: NSObject {
 		cancelButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		cancelButton.setTitle("⌫", forState: .Normal)
 		
+		shareButton = UIButton(frame: CGRectMake(originView.bounds.size.width - Constants.buttonSize + Constants.space, originView.bounds.size.height - (Constants.buttonSize + Constants.space), Constants.buttonSize, Constants.buttonSize))
+		shareButton.addTarget(self, action: "sharePhoto", forControlEvents: .TouchUpInside)
+		shareButton.titleLabel?.font = UIFont.systemFontOfSize(30)
+		shareButton.setTitle("⊼", forState: .Normal)
+		
+		
 		insertTextViewButton = UIButton(frame: CGRectMake(originView.bounds.size.width - Constants.buttonSize, Constants.space, Constants.buttonSize, Constants.buttonSize))
 		insertTextViewButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		insertTextViewButton.addTarget(self, action: "insertText", forControlEvents: .TouchUpInside)
@@ -93,6 +101,7 @@ class ImageEditor: NSObject {
 		
 		view.addSubview(saveButton)
 		view.addSubview(cancelButton)
+		view.addSubview(shareButton)
 		view.addSubview(insertTextViewButton)
 	}
 	
@@ -144,6 +153,10 @@ class ImageEditor: NSObject {
 		
 	}
 	
+	func sharePhoto() {
+		delegate?.imageEditorDidShare(self.getEditedImage())
+	}
+	
     func cancelEditing() {
         delegate?.imageEditorDidCancel()
     }
@@ -172,6 +185,12 @@ extension ImageEditor : UITextFieldDelegate {
 	func textFieldDidEndEditing(textField: UITextField) {
 		
 		self.removeTextField()
+	}
+	
+	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+		
+		
+		return true
 	}
 	
     /***

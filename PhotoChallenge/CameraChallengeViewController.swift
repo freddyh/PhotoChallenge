@@ -162,10 +162,15 @@ extension CameraChallengeViewController : ImageEditorDelegate {
 	}
 		
 	func imageEditorDidSaveImage(image:UIImage) {
-		self.showSavedPhotoAlert(image)
+		self.showSavedPhotoAlert()
 	}
 	
-	func showSavedPhotoAlert(image:UIImage) {
+	func imageEditorDidShare(image:UIImage) {
+		let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+		presentViewController(activityController, animated: true, completion: nil)
+	}
+	
+	func showSavedPhotoAlert() {
 		
         /***
          Show an alert that confirms the photo was saved and give an option to share the photo
@@ -173,17 +178,9 @@ extension CameraChallengeViewController : ImageEditorDelegate {
         ***/
 		let successAlert = UIAlertController(title: "Successfully Saved", message: "There is a new photo in your library.", preferredStyle: .Alert)
 		let doneAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-		let shareAction = UIAlertAction(title: "Share", style: .Default, handler: { _ in self.showShareMenu(image)})
         
 		successAlert.addAction(doneAction)
-		successAlert.addAction(shareAction)
 		
 		presentViewController(successAlert, animated: true, completion: nil)
-	}
-	
-	func showShareMenu(image:UIImage) {
-		
-		let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-		presentViewController(activityController, animated: true, completion: nil)
 	}
 }
