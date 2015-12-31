@@ -35,6 +35,7 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
 		
+		
 		/***
 		Capture session coordinates the flow of data between inputs and outputs
 		Session Preset is a capture setting for 1080p quality video
@@ -87,8 +88,13 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 		print("toggle Camera POsition")
 		//create new device
 		//create new device input
+		//session.beginConfig
 		//remove old deviceinput from session
+		//set session preset again
+		//device supports preset?
+		//device lockConfiguration?
 		//if canAdd then add
+		//session.commitConfig
 	}
 	
 	@IBAction func tappedCaptureButton(sender: CameraCaptureButton) {
