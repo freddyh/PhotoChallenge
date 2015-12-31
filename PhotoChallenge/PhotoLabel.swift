@@ -59,8 +59,6 @@ class PhotoLabel: UILabel {
 		if sizeStage > 3 {
 			sizeStage = 0
 		}
-		
-		
 
 		switch sizeStage {
 			case 0:
@@ -71,24 +69,21 @@ class PhotoLabel: UILabel {
 				self.numberOfLines = 1
 			
 			case 1:
-				//Increase size and font
+				//Increase frame size and font
 				let height = (self.superview?.bounds.height)! * 0.7
-				let width = (self.superview?.bounds.width)! * 0.9
-				
-				self.frame = CGRectMake(0, height * 0.2, width, height)
+				self.textAlignment = .Center
+				self.frame = CGRectMake(0, 0, (self.superview?.bounds.width)!, height)
+				self.center = (self.superview?.center)!
 				self.font = UIFont.systemFontOfSize(50)
 				self.numberOfLines = 0
 			
 			case 2:
 				//Right align text
 				self.textAlignment = .Right
-				self.font = UIFont.systemFontOfSize(50)
-				self.numberOfLines = 0
+			
 			case 3:
 				//Left align text
 				self.textAlignment = .Left
-				self.font = UIFont.systemFontOfSize(50)
-				self.numberOfLines = 0
 			default: break
 		}
 	}
