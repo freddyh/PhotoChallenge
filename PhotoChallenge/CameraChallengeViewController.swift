@@ -42,7 +42,7 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 		1920pixels by 1080pixels
 		***/
 		captureSession = AVCaptureSession()
-		captureSession?.sessionPreset = AVCaptureSessionPreset1920x1080
+		captureSession?.sessionPreset = AVCaptureSessionPresetHigh
 		
 		let backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
 		
@@ -85,16 +85,36 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 	}
 	
 	@IBAction func switchCameraButtonTapped(sender: UIButton) {
-		print("toggle Camera POsition")
-		//create new device
-		//create new device input
-		//session.beginConfig
-		//remove old deviceinput from session
-		//set session preset again
-		//device supports preset?
-		//device lockConfiguration?
-		//if canAdd then add
-		//session.commitConfig
+		
+		//Get a reference to current device and current camera position.
+		//Toggle the position for next device
+		let currentCameraInput = captureSession?.inputs.first as! AVCaptureDeviceInput
+		let nextCameraPosition:AVCaptureDevicePosition = currentCameraInput.device.position == .Front ? .Back : .Front
+		
+		//Instantiate new device
+		var nextCameraDevice:AVCaptureDevice?
+		for device in AVCaptureDevice.devices() {
+			if (device as! AVCaptureDevice).position == nextCameraPosition {
+				nextCameraDevice = device as? AVCaptureDevice
+			}
+		}
+		
+		//Begin changing device input
+		captureSession?.beginConfiguration()
+		captureSession?.removeInput(currentCameraInput)
+			
+		do {
+			let newCameraInput:AVCaptureDeviceInput = try AVCaptureDeviceInput(device: nextCameraDevice)
+		
+			if captureSession?.canAddInput(newCameraInput) != nil {
+				captureSession?.addInput(newCameraInput)
+			}
+		} catch let error {
+			print("Error while switching camera poisition: \(error)")
+		}
+		
+		captureSession?.commitConfiguration()
+		
 	}
 	
 	@IBAction func tappedCaptureButton(sender: CameraCaptureButton) {

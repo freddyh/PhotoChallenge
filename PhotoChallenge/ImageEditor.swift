@@ -76,14 +76,18 @@ class ImageEditor: NSObject {
 	func setupButtons() {
 		
 		saveButton = UIButton(frame: CGRectMake(Constants.space, originView.bounds.size.height - (Constants.buttonSize + Constants.space), Constants.buttonSize, Constants.buttonSize))
+		saveButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		saveButton.addTarget(self, action: "saveImage", forControlEvents: .TouchUpInside)
 		saveButton.setTitle("⬇︎", forState: .Normal)
+
 		
 		cancelButton = UIButton(frame: CGRectMake(Constants.space, Constants.space, Constants.buttonSize, Constants.buttonSize))
 		cancelButton.addTarget(self, action: "cancelEditing", forControlEvents: .TouchUpInside)
+		cancelButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		cancelButton.setTitle("⌫", forState: .Normal)
 		
 		insertTextViewButton = UIButton(frame: CGRectMake(originView.bounds.size.width - Constants.buttonSize, Constants.space, Constants.buttonSize, Constants.buttonSize))
+		insertTextViewButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		insertTextViewButton.addTarget(self, action: "insertText", forControlEvents: .TouchUpInside)
 		insertTextViewButton.setTitle("🆃", forState: .Normal)
 		
