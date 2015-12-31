@@ -12,6 +12,7 @@ class PhotoLabel: UILabel {
 	
 	var panRecognizer: UIPanGestureRecognizer?
 	var doubleTapRecognizer: UITapGestureRecognizer?
+	var longPressRecognizer: UILongPressGestureRecognizer?
 	
 	var sizeStage:Int = 0
 	
@@ -22,9 +23,12 @@ class PhotoLabel: UILabel {
 		panRecognizer = UIPanGestureRecognizer(target: self, action: "move")
 		doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "incrementSizeStage")
 		doubleTapRecognizer?.numberOfTapsRequired = 2
+		longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "deletePhotoLabel")
+		longPressRecognizer?.minimumPressDuration = 1.5
         
 		self.addGestureRecognizer(panRecognizer!)
 		self.addGestureRecognizer(doubleTapRecognizer!)
+		self.addGestureRecognizer(longPressRecognizer!)
 		
 		/***
 		Center the text and change the font name, size, and color
@@ -86,6 +90,10 @@ class PhotoLabel: UILabel {
 				self.textAlignment = .Left
 			default: break
 		}
+	}
+	
+	func deletePhotoLabel() {
+		self.removeFromSuperview()
 	}
 }
 

@@ -15,7 +15,6 @@
 		468617901C3353D300F569BE /* ImageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4686178F1C3353D300F569BE /* ImageEditor.swift */; };
 		468617921C33AB6200F569BE /* PhotoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468617911C33AB6200F569BE /* PhotoLabel.swift */; };
 		468621A31C34765000CA747D /* CameraCaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468621A21C34765000CA747D /* CameraCaptureButton.swift */; };
-		468621A71C3499E500CA747D /* camera-rotate.png in Resources */ = {isa = PBXBuildFile; fileRef = 468621A61C3499E500CA747D /* camera-rotate.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		4686178F1C3353D300F569BE /* ImageEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEditor.swift; sourceTree = "<group>"; };
 		468617911C33AB6200F569BE /* PhotoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLabel.swift; sourceTree = "<group>"; };
 		468621A21C34765000CA747D /* CameraCaptureButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCaptureButton.swift; sourceTree = "<group>"; };
-		468621A61C3499E500CA747D /* camera-rotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-rotate.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +62,6 @@
 			children = (
 				4642851E1C31B1B8002270BE /* AppDelegate.swift */,
 				464285251C31B1B8002270BE /* Assets.xcassets */,
-				468621A61C3499E500CA747D /* camera-rotate.png */,
 				468621A21C34765000CA747D /* CameraCaptureButton.swift */,
 				4686176B1C3327DE00F569BE /* CameraChallengeViewController.swift */,
 				4686178F1C3353D300F569BE /* ImageEditor.swift */,
@@ -136,7 +133,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				464285291C31B1B8002270BE /* LaunchScreen.storyboard in Resources */,
-				468621A71C3499E500CA747D /* camera-rotate.png in Resources */,
 				464285261C31B1B8002270BE /* Assets.xcassets in Resources */,
 				464285241C31B1B8002270BE /* Main.storyboard in Resources */,
 			);
