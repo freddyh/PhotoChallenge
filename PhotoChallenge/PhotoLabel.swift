@@ -59,35 +59,33 @@ class PhotoLabel: UILabel {
 		if sizeStage > 3 {
 			sizeStage = 0
 		}
+		
+		
 
 		switch sizeStage {
 			case 0:
-				let height = (self.superview?.bounds.height)! * 0.1
-				let width = (self.superview?.bounds.width)!
-
-				self.frame = CGRectMake(0, height * 0.5, width, height)
-				self.font = UIFont.systemFontOfSize(14)
+				//Center the label and size it similar to textField
+				self.frame = CGRectMake(0, 0, (self.superview?.bounds.width)!, 20)
+				self.center = (self.superview?.center)!
+				self.font = UIFont.systemFontOfSize(18)
 				self.numberOfLines = 1
+			
 			case 1:
+				//Increase size and font
 				let height = (self.superview?.bounds.height)! * 0.7
 				let width = (self.superview?.bounds.width)! * 0.9
 				
 				self.frame = CGRectMake(0, height * 0.2, width, height)
 				self.font = UIFont.systemFontOfSize(50)
 				self.numberOfLines = 0
+			
 			case 2:
-				let height = (self.superview?.bounds.height)! * 0.7
-				let width = (self.superview?.bounds.width)! * 0.9
-				
-				self.frame = CGRectMake(0, height * 0.2, width, height)
+				//Right align text
 				self.textAlignment = .Right
 				self.font = UIFont.systemFontOfSize(50)
 				self.numberOfLines = 0
 			case 3:
-				let height = (self.superview?.bounds.height)! * 0.7
-				let width = (self.superview?.bounds.width)! * 0.9
-				
-				self.frame = CGRectMake(0, height * 0.2, width, height)
+				//Left align text
 				self.textAlignment = .Left
 				self.font = UIFont.systemFontOfSize(50)
 				self.numberOfLines = 0

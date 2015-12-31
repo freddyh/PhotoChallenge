@@ -11,6 +11,7 @@ import UIKit
 struct Constants {
 	static let buttonSize:CGFloat = 60.0
 	static let space:CGFloat = 8.0
+	
 }
 
 protocol ImageEditorDelegate : class {
@@ -22,8 +23,7 @@ protocol ImageEditorDelegate : class {
 class ImageEditor: NSObject {
 
 	weak var delegate: ImageEditorDelegate?
-    
-	var originView: UIView!
+	weak var superView: UIView!
 	var view: UIView!
 	var imageView: UIImageView!
 	var saveButton: UIButton!
@@ -32,6 +32,19 @@ class ImageEditor: NSObject {
 	var insertTextViewButton: UIButton!
 	var activityIndicator: UIActivityIndicatorView!
 	var textField: UITextField!
+	
+	var editedImage: UIImage {
+		get {
+			
+			UIGraphicsBeginImageContextWithOptions(imageView.frame.size, true, 0)
+			imageView.drawViewHierarchyInRect(imageView.bounds, afterScreenUpdates: true)
+			let result = UIGraphicsGetImageFromCurrentImageContext()
+			UIGraphicsEndImageContext()
+			
+			return result
+			
+		}
+	}
 	
 	var tapRecognizer:UITapGestureRecognizer?
 	
@@ -45,11 +58,11 @@ class ImageEditor: NSObject {
 	init(sourceView: UIView, originalImage: UIImage) {
 		super.init()
 		
-		originView = sourceView
-		view = UIView(frame: originView.frame)
-		originView.addSubview(view)
+		superView = sourceView
+		view = UIView(frame: superView.frame)
+		superView.addSubview(view)
 		
-		imageView = UIImageView(frame: originView.frame)
+		imageView = UIImageView(frame: superView.frame)
 		imageView.image = originalImage
 		imageView.userInteractionEnabled = true
 		view.addSubview(imageView)
@@ -75,10 +88,9 @@ class ImageEditor: NSObject {
 		view.addSubview(textField)
 	}
 	
-	
 	func setupButtons() {
 		
-		saveButton = UIButton(frame: CGRectMake(Constants.space, originView.bounds.size.height - (Constants.buttonSize + Constants.space), Constants.buttonSize, Constants.buttonSize))
+		saveButton = UIButton(frame: CGRectMake(Constants.space, superView.bounds.size.height - (Constants.buttonSize + Constants.space), Constants.buttonSize, Constants.buttonSize))
 		saveButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		saveButton.addTarget(self, action: "saveImage", forControlEvents: .TouchUpInside)
 		saveButton.setTitle("⬇︎", forState: .Normal)
@@ -88,13 +100,12 @@ class ImageEditor: NSObject {
 		cancelButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		cancelButton.setTitle("⌫", forState: .Normal)
 		
-		shareButton = UIButton(frame: CGRectMake(originView.bounds.size.width - Constants.buttonSize + Constants.space, originView.bounds.size.height - (Constants.buttonSize + Constants.space), Constants.buttonSize, Constants.buttonSize))
+		shareButton = UIButton(frame: CGRectMake(superView.bounds.size.width - (Constants.buttonSize + Constants.space), superView.bounds.size.height - (Constants.buttonSize + Constants.space), Constants.buttonSize, Constants.buttonSize))
 		shareButton.addTarget(self, action: "sharePhoto", forControlEvents: .TouchUpInside)
-		shareButton.titleLabel?.font = UIFont.systemFontOfSize(30)
+		shareButton.titleLabel?.font = UIFont.systemFontOfSize(60)
 		shareButton.setTitle("⊼", forState: .Normal)
 		
-		
-		insertTextViewButton = UIButton(frame: CGRectMake(originView.bounds.size.width - Constants.buttonSize, Constants.space, Constants.buttonSize, Constants.buttonSize))
+		insertTextViewButton = UIButton(frame: CGRectMake(superView.bounds.size.width - Constants.buttonSize, Constants.space, Constants.buttonSize, Constants.buttonSize))
 		insertTextViewButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		insertTextViewButton.addTarget(self, action: "insertText", forControlEvents: .TouchUpInside)
 		insertTextViewButton.setTitle("🆃", forState: .Normal)
@@ -111,7 +122,7 @@ class ImageEditor: NSObject {
 	func saveImage() {
 		
 		self.beginActivityIndicatorView()
-		UIImageWriteToSavedPhotosAlbum(self.getEditedImage(), self, "image:didSaveWithError:contextInfo:", nil)
+		UIImageWriteToSavedPhotosAlbum(editedImage, self, "image:didSaveWithError:contextInfo:", nil)
 	}
     
     /***
@@ -154,7 +165,7 @@ class ImageEditor: NSObject {
 	}
 	
 	func sharePhoto() {
-		delegate?.imageEditorDidShare(self.getEditedImage())
+		delegate?.imageEditorDidShare(editedImage)
 	}
 	
     func cancelEditing() {
