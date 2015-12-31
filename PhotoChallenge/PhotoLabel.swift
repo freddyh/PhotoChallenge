@@ -13,6 +13,8 @@ class PhotoLabel: UILabel {
 	var panRecognizer: UIPanGestureRecognizer?
 	var doubleTapRecognizer: UITapGestureRecognizer?
 	var longPressRecognizer: UILongPressGestureRecognizer?
+	var pinchRecognizer: UIPinchGestureRecognizer?
+	var rotationRecognizer: UIRotationGestureRecognizer?
 	
 	var sizeStage:Int = 0
 	
@@ -21,14 +23,27 @@ class PhotoLabel: UILabel {
 		userInteractionEnabled = true
         
 		panRecognizer = UIPanGestureRecognizer(target: self, action: "move")
+		panRecognizer?.delegate = self
+		
 		doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "incrementSizeStage")
 		doubleTapRecognizer?.numberOfTapsRequired = 2
+		doubleTapRecognizer?.delegate = self
+		
 		longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "deletePhotoLabel")
 		longPressRecognizer?.minimumPressDuration = 1.5
-        
+		longPressRecognizer?.delegate = self
+		
+		pinchRecognizer = UIPinchGestureRecognizer(target: self, action: "stretch")
+		pinchRecognizer?.delegate = self
+		
+		rotationRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate")
+        rotationRecognizer?.delegate = self
+		
 		self.addGestureRecognizer(panRecognizer!)
 		self.addGestureRecognizer(doubleTapRecognizer!)
 		self.addGestureRecognizer(longPressRecognizer!)
+		self.addGestureRecognizer(pinchRecognizer!)
+		self.addGestureRecognizer(rotationRecognizer!)
 		
 		/***
 		Center the text and change the font name, size, and color
@@ -94,6 +109,35 @@ class PhotoLabel: UILabel {
 	
 	func deletePhotoLabel() {
 		self.removeFromSuperview()
+	}
+	
+	func stretch() {
+		
+		if let recognizer = pinchRecognizer {
+			switch recognizer.state {
+			case UIGestureRecognizerState.Began:
+				break
+			case UIGestureRecognizerState.Changed:
+				recognizer.view?.transform = CGAffineTransformScale((recognizer.view?.transform)!, recognizer.scale, recognizer.scale)
+				recognizer.scale = 1.0
+			case UIGestureRecognizerState.Ended:
+				break
+			default: break
+			}
+		}
+	}
+	
+	func handleRotate() {
+		if let recognizer = rotationRecognizer {
+			recognizer.view?.transform = CGAffineTransformRotate((recognizer.view?.transform)!, recognizer.rotation)
+			recognizer.rotation = 0.0
+		}
+	}
+}
+
+extension PhotoLabel : UIGestureRecognizerDelegate {
+	func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		return true
 	}
 }
 
