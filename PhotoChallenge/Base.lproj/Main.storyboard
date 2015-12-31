@@ -22,18 +22,31 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP9-9U-HKk" customClass="CameraCaptureButton" customModule="PhotoChallenge" customModuleProvider="target">
-                                        <rect key="frame" x="275" y="522" width="50" height="50"/>
+                                        <rect key="frame" x="270" y="512" width="60" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="G31-M7-IP5"/>
-                                            <constraint firstAttribute="height" constant="50" id="Pm4-7Y-mZ3"/>
+                                            <constraint firstAttribute="width" constant="60" id="G31-M7-IP5"/>
+                                            <constraint firstAttribute="height" constant="60" id="Pm4-7Y-mZ3"/>
                                         </constraints>
                                         <connections>
                                             <action selector="tappedCaptureButton:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Wse-Wx-nir"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-Zy-x2V" userLabel="Switch Camera Button">
+                                        <rect key="frame" x="8" y="532" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="Bxi-Sh-ppC"/>
+                                            <constraint firstAttribute="height" constant="60" id="hOk-zc-vru"/>
+                                        </constraints>
+                                        <state key="normal" image="camera-rotate.png"/>
+                                        <connections>
+                                            <action selector="switchCameraButtonTapped:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Mu6-Hd-ce9"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="bHk-Zy-x2V" secondAttribute="bottom" constant="8" id="4JR-5Q-knV"/>
+                                    <constraint firstItem="bHk-Zy-x2V" firstAttribute="leading" secondItem="xvb-Lf-wQm" secondAttribute="leading" constant="8" id="Zgh-bl-rax"/>
                                     <constraint firstItem="KP9-9U-HKk" firstAttribute="centerX" secondItem="xvb-Lf-wQm" secondAttribute="centerX" id="cpK-XB-SE9"/>
                                     <constraint firstItem="KP9-9U-HKk" firstAttribute="bottom" secondItem="xvb-Lf-wQm" secondAttribute="bottomMargin" constant="-20" id="jvq-pK-GsW"/>
                                 </constraints>
@@ -50,6 +63,7 @@
                     <connections>
                         <outlet property="cameraView" destination="xvb-Lf-wQm" id="L8D-OJ-FKi"/>
                         <outlet property="captureButton" destination="KP9-9U-HKk" id="dKZ-29-GuR"/>
+                        <outlet property="switchCameraButton" destination="bHk-Zy-x2V" id="NT4-nS-uo6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hoR-mf-Rv7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -57,4 +71,7 @@
             <point key="canvasLocation" x="444" y="1586"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="camera-rotate.png" width="64" height="64"/>
+    </resources>
 </document>

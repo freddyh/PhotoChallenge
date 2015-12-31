@@ -20,6 +20,7 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
     
 	@IBOutlet weak var cameraView: UIView!
 	@IBOutlet weak var captureButton: CameraCaptureButton!
+	@IBOutlet weak var switchCameraButton: UIButton!
 	
     /***
      AVFoundation Properties
@@ -27,28 +28,12 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 	var captureSession: AVCaptureSession?
 	var stillImageOutput: AVCaptureStillImageOutput?
 	var previewLayer: AVCaptureVideoPreviewLayer?
-
     
     var isEditingPhoto: Bool = false
 	var imageEditorView: ImageEditor!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-    }
-	
-	override func viewDidAppear(animated: Bool) {
-		super.viewDidAppear(animated)
-		
-        /***
-        Video that is being displayed should fill the screen
-        ***/
-		previewLayer?.frame = cameraView.bounds
-	}
-	
-	override func viewWillAppear(animated: Bool) {
-		super.viewWillAppear(animated)
-		
 		
 		/***
 		Capture session coordinates the flow of data between inputs and outputs
@@ -60,11 +45,6 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 		
 		let backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
 		
-		
-		/***
-		Checks if the session is capable of adding the inputs and outputs
-		If true, then create a preview layer that serves as a live feed of the back camera
-		***/
 		do {
 			
 			let input = try AVCaptureDeviceInput(device: backCamera)
@@ -78,7 +58,6 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 				stillImageOutput?.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
 				
 				if captureSession?.canAddOutput(stillImageOutput) != nil {
-					
 					captureSession?.addOutput(stillImageOutput)
 					
 					/***
@@ -88,17 +67,31 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 					previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
 					previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
 					cameraView.layer.insertSublayer(previewLayer!, below: captureButton.layer)
-
+					
 					captureSession?.startRunning()
 				}
 			}
-			
 		} catch let error {
-			print("Error: \(error)")
+			print("Error creating input with device: \(error)")
 		}
+    }
+	
+	override func viewDidAppear(animated: Bool) {
+		super.viewDidAppear(animated)
 		
+        /***
+        Video that is being displayed should fill the screen
+        ***/
+		previewLayer?.frame = cameraView.bounds
 	}
 	
+	@IBAction func switchCameraButtonTapped(sender: UIButton) {
+		print("toggle Camera POsition")
+		//create new device
+		//create new device input
+		//remove old deviceinput from session
+		//if canAdd then add
+	}
 	
 	@IBAction func tappedCaptureButton(sender: CameraCaptureButton) {
 		
