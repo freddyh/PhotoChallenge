@@ -69,6 +69,7 @@ class ImageEditor: NSObject {
 		textField.becomeFirstResponder()
 		textField.returnKeyType = .Done
 		textField.delegate = self
+		textField.alpha = 0.5
 		view.addSubview(textField)
 	}
 	
@@ -79,7 +80,6 @@ class ImageEditor: NSObject {
 		saveButton.titleLabel?.font = UIFont.systemFontOfSize(30)
 		saveButton.addTarget(self, action: "saveImage", forControlEvents: .TouchUpInside)
 		saveButton.setTitle("⬇︎", forState: .Normal)
-
 		
 		cancelButton = UIButton(frame: CGRectMake(Constants.space, Constants.space, Constants.buttonSize, Constants.buttonSize))
 		cancelButton.addTarget(self, action: "cancelEditing", forControlEvents: .TouchUpInside)
@@ -127,11 +127,10 @@ class ImageEditor: NSObject {
 		activityIndicator.startAnimating()
 	}
 	
-	
-	/***
+	/******************************************
 	Callback after photo is saved to camera roll
 	Stops the spinning wheel and notifies delegate
-	***/
+	*********************************************/
 	func image(image:UIImage, didSaveWithError error:NSError, contextInfo:UnsafePointer<Void>) {
 		
 		if error.code == 0 {

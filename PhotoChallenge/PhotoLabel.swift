@@ -13,12 +13,14 @@ class PhotoLabel: UILabel {
 	var panRecognizer: UIPanGestureRecognizer?
 	var doubleTapRecognizer: UITapGestureRecognizer?
 	
+	var sizeStage:Int = 0
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		userInteractionEnabled = true
         
 		panRecognizer = UIPanGestureRecognizer(target: self, action: "move")
-		doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "remove")
+		doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "incrementSizeStage")
 		doubleTapRecognizer?.numberOfTapsRequired = 2
         
 		self.addGestureRecognizer(panRecognizer!)
@@ -49,9 +51,73 @@ class PhotoLabel: UILabel {
 	}
 	
     /***
-     Delete if double tapped
+     Cycle through different sizes and alignments
     ***/
-	func remove() {
-		self.removeFromSuperview()
+	func incrementSizeStage() {
+		
+		sizeStage += 1
+		if sizeStage > 3 {
+			sizeStage = 0
+		}
+
+		switch sizeStage {
+			case 0:
+				let height = (self.superview?.bounds.height)! * 0.1
+				let width = (self.superview?.bounds.width)!
+
+				self.frame = CGRectMake(0, height * 0.5, width, height)
+				self.font = UIFont.systemFontOfSize(14)
+				self.numberOfLines = 1
+			case 1:
+				let height = (self.superview?.bounds.height)! * 0.7
+				let width = (self.superview?.bounds.width)! * 0.9
+				
+				self.frame = CGRectMake(0, height * 0.2, width, height)
+				self.font = UIFont.systemFontOfSize(50)
+				self.numberOfLines = 0
+			case 2:
+				let height = (self.superview?.bounds.height)! * 0.7
+				let width = (self.superview?.bounds.width)! * 0.9
+				
+				self.frame = CGRectMake(0, height * 0.2, width, height)
+				self.textAlignment = .Right
+				self.font = UIFont.systemFontOfSize(50)
+				self.numberOfLines = 0
+			case 3:
+				let height = (self.superview?.bounds.height)! * 0.7
+				let width = (self.superview?.bounds.width)! * 0.9
+				
+				self.frame = CGRectMake(0, height * 0.2, width, height)
+				self.textAlignment = .Left
+				self.font = UIFont.systemFontOfSize(50)
+				self.numberOfLines = 0
+			default: break
+		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
