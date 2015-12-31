@@ -62,13 +62,13 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 					
 					/***
 					Display video as it being captured by the input device
+					Set the frame so the video fills the screen
 					***/
 					previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 					previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
 					previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
-					cameraView.layer.insertSublayer(previewLayer!, below: captureButton.layer)
 					
-					captureSession?.startRunning()
+					cameraView.layer.insertSublayer(previewLayer!, below: captureButton.layer)
 				}
 			}
 		} catch let error {
@@ -79,10 +79,8 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 	override func viewDidAppear(animated: Bool) {
 		super.viewDidAppear(animated)
 		
-        /***
-        Video that is being displayed should fill the screen
-        ***/
 		previewLayer?.frame = cameraView.bounds
+		captureSession?.startRunning()
 	}
 	
 	@IBAction func switchCameraButtonTapped(sender: UIButton) {
