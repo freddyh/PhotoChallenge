@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-
+import Parse
 
 /***
 This is the initial view controller whose view is a feed from the camera
@@ -118,6 +118,12 @@ class CameraChallengeViewController: UIViewController, UIImagePickerControllerDe
 	}
 	
 	@IBAction func tappedCaptureButton(sender: CameraCaptureButton) {
+		
+		let testObject = PFObject(className: "TestObject")
+		testObject["foo"] = "bar"
+		testObject.saveInBackgroundWithBlock { (succes, error) -> Void in
+			print("object has been saved")
+		}
 		
 		if !isEditingPhoto {
 			

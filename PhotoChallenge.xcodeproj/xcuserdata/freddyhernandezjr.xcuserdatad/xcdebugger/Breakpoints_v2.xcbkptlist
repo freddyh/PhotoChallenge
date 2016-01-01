@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoChallenge/CameraChallengeViewController.swift"
-            timestampString = "473240175.525072"
+            timestampString = "473301420.723288"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
             landmarkName = "imageEditorDidSaveImage(_:)"
             landmarkType = "5">
          </BreakpointContent>
