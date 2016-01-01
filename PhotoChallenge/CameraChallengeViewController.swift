@@ -15,7 +15,7 @@ This is the initial view controller whose view is a feed from the camera
 One tap will take a photo and open the photo in the ImageEditor
 ***/
 
-class CameraChallengeViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CameraChallengeViewController: UIViewController  {
 
     
 	@IBOutlet weak var cameraView: UIView!
@@ -183,4 +183,33 @@ extension CameraChallengeViewController : ImageEditorDelegate {
 		
 		presentViewController(successAlert, animated: true, completion: nil)
 	}
+}
+
+extension CameraChallengeViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    @IBAction func openPhotoLibrary(sender: UIButton) {
+        
+        let imagePicker = UIImagePickerController()
+        if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
+            imagePicker.sourceType = .PhotoLibrary
+            imagePicker.delegate = self
+            presentViewController(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        if let image = info[UIImagePickerControllerOriginalImage] {
+            self.imageEditorView = ImageEditor(sourceView: self.view, originalImage: image as! UIImage)
+            self.imageEditorView.delegate = self
+        }
+        
+        
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        print("image picker did cancel")
+    }
 }

@@ -45,11 +45,27 @@
                                             <action selector="switchCameraButtonTapped:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Mu6-Hd-ce9"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vl2-qa-7jy" userLabel="Photo Library Button">
+                                        <rect key="frame" x="20" y="512" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="Ccd-rZ-eoo"/>
+                                            <constraint firstAttribute="width" constant="60" id="MAB-J4-RIs"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                        <state key="normal" title="❐">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="openPhotoLibrary:" destination="XjF-G8-VbH" eventType="touchUpInside" id="XKe-Mk-X4V"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="bHk-Zy-x2V" secondAttribute="bottom" constant="8" id="4JR-5Q-knV"/>
                                     <constraint firstItem="bHk-Zy-x2V" firstAttribute="top" secondItem="xvb-Lf-wQm" secondAttribute="top" constant="20" id="7gq-8B-pkD"/>
+                                    <constraint firstItem="vl2-qa-7jy" firstAttribute="leading" secondItem="xvb-Lf-wQm" secondAttribute="leading" constant="20" id="Bss-6m-dq0"/>
+                                    <constraint firstItem="vl2-qa-7jy" firstAttribute="centerY" secondItem="KP9-9U-HKk" secondAttribute="centerY" id="SeN-O4-WCD"/>
                                     <constraint firstItem="bHk-Zy-x2V" firstAttribute="leading" secondItem="xvb-Lf-wQm" secondAttribute="leading" constant="8" id="Zgh-bl-rax"/>
                                     <constraint firstItem="KP9-9U-HKk" firstAttribute="centerX" secondItem="xvb-Lf-wQm" secondAttribute="centerX" id="cpK-XB-SE9"/>
                                     <constraint firstItem="KP9-9U-HKk" firstAttribute="bottom" secondItem="xvb-Lf-wQm" secondAttribute="bottomMargin" constant="-20" id="jvq-pK-GsW"/>
