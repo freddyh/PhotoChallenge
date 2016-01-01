@@ -65,6 +65,7 @@ class ImageEditor: NSObject {
 		imageView = UIImageView(frame: superView.frame)
 		imageView.image = originalImage
 		imageView.userInteractionEnabled = true
+        imageView.contentMode = .ScaleAspectFill
 		view.addSubview(imageView)
 		
 		tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
