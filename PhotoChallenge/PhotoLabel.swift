@@ -62,10 +62,9 @@ class PhotoLabel: UILabel {
 	Panning on the label will drag
 	***/
 	func move() {
-		let translation = panRecognizer?.translationInView(self)
+		let translation = panRecognizer?.translationInView(self.superview!)
 		self.center.x += (translation?.x)!
 		self.center.y += (translation?.y)!
-		
 		panRecognizer?.setTranslation(CGPointZero, inView: self)
 	}
 	
@@ -108,6 +107,7 @@ class PhotoLabel: UILabel {
 	}
 	
 	func deletePhotoLabel() {
+		
 		self.removeFromSuperview()
 	}
 	
