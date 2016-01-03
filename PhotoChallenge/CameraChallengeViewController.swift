@@ -149,7 +149,7 @@ class CameraChallengeViewController: UIViewController  {
 					let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
 					let dataProvider = CGDataProviderCreateWithCFData(imageData)
 					let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
-					let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
+					let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
 					
 					self.imageEditorView = ImageEditor(sourceView: self.view, originalImage: image)
 					self.imageEditorView.delegate = self

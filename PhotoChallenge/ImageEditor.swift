@@ -14,8 +14,9 @@ import UIKit
 struct Constants {
 	static let buttonSize:CGFloat = 60.0
 	static let space:CGFloat = 8.0
-	
 }
+
+let FilterNames = ["CIColorInvert", "CIColorPosterize", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone"]
 
 protocol ImageEditorDelegate : class {
 	func imageEditorDidLoad()
@@ -36,6 +37,8 @@ class ImageEditor: NSObject {
 	var insertTextViewButton: UIButton!
 	var activityIndicator: UIActivityIndicatorView!
 	var textField: UITextField!
+	var originalImage: UIImage!
+	var filterIndex: Int = -1
 	
 	var currentImage: UIImage {
 		get {
@@ -46,7 +49,6 @@ class ImageEditor: NSObject {
 			UIGraphicsEndImageContext()
 			
 			return result
-			
 		}
 	}
 	
@@ -62,22 +64,23 @@ class ImageEditor: NSObject {
 	init(sourceView: UIView, originalImage: UIImage) {
 		super.init()
 		
-		print(originalImage.size)
+		self.originalImage = originalImage
 		
 		superView = sourceView
 		view = UIView(frame: superView.frame)
 		superView.addSubview(view)
 		
 		imageView = UIImageView(frame: superView.frame)
-		
-		let stillImageFilter = CIFilter(name: "CIEdgeWork", withInputParameters: [kCIInputImageKey:CIImage(image: originalImage)!])
-		
-		imageView.image = UIImage(CIImage: stillImageFilter?.valueForKey(kCIOutputImageKey) as! CIImage, scale: 1.0, orientation: UIImageOrientation.Right)
+		let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "updateImageWithFilter")
+		swipeRecognizer.direction = .Left
+		swipeRecognizer.numberOfTouchesRequired = 1
+		imageView.addGestureRecognizer(swipeRecognizer)
 		imageView.userInteractionEnabled = true
+		imageView.image = originalImage
 		
-		if originalImage.size != CGSize(width: 1080.0, height: 1920.0) {
-			imageView.contentMode = .ScaleAspectFit
-		}
+//		if originalImage.size != CGSize(width: 1080.0, height: 1920.0) {
+//			imageView.contentMode = .ScaleAspectFill
+//		}
 		
 		view.addSubview(imageView)
 		
@@ -88,6 +91,24 @@ class ImageEditor: NSObject {
 		self.setupButtons()
 		
 		delegate?.imageEditorDidLoad()
+	}
+	
+	func updateImageWithFilter() {
+		
+		filterIndex++
+		if filterIndex == FilterNames.count {
+			filterIndex = -1
+			imageView.image = originalImage
+		} else {
+		
+			let filterName = FilterNames[filterIndex]
+			let stillImageFilter = CIFilter(name: filterName, withInputParameters: [kCIInputImageKey:CIImage(image: originalImage)!])
+			
+			imageView.image = UIImage(CIImage: stillImageFilter?.valueForKey(kCIOutputImageKey) as! CIImage, scale: 1.0, orientation: UIImageOrientation.Up)
+		}
+		//if filteris out of range then return original image with no filter
+		
+		
 	}
 	
 	/***
