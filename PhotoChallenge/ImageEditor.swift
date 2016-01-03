@@ -6,6 +6,9 @@
 //  Copyright © 2015 Freddy Hernandez. All rights reserved.
 //
 
+//Check image dimensions
+//Need to adjust the size of an image if it comes from the photo library
+
 import UIKit
 
 struct Constants {
@@ -15,6 +18,7 @@ struct Constants {
 }
 
 protocol ImageEditorDelegate : class {
+	func imageEditorDidLoad()
 	func imageEditorDidCancel()
 	func imageEditorDidSaveImage(image:UIImage)
 	func imageEditorDidShare(image:UIImage)
@@ -33,7 +37,7 @@ class ImageEditor: NSObject {
 	var activityIndicator: UIActivityIndicatorView!
 	var textField: UITextField!
 	
-	var editedImage: UIImage {
+	var currentImage: UIImage {
 		get {
 			
 			UIGraphicsBeginImageContextWithOptions(imageView.frame.size, true, 0)
@@ -53,19 +57,28 @@ class ImageEditor: NSObject {
 	}
 	
 	/***
-	Init will set up the view hierarchy, position buttons on the screen,
+	Init will set up the view hierarchy, position buttons on the screen
 	***/
 	init(sourceView: UIView, originalImage: UIImage) {
 		super.init()
+		
+		print(originalImage.size)
 		
 		superView = sourceView
 		view = UIView(frame: superView.frame)
 		superView.addSubview(view)
 		
 		imageView = UIImageView(frame: superView.frame)
-		imageView.image = originalImage
+		
+		let stillImageFilter = CIFilter(name: "CIEdgeWork", withInputParameters: [kCIInputImageKey:CIImage(image: originalImage)!])
+		
+		imageView.image = UIImage(CIImage: stillImageFilter?.valueForKey(kCIOutputImageKey) as! CIImage, scale: 1.0, orientation: UIImageOrientation.Right)
 		imageView.userInteractionEnabled = true
-        imageView.contentMode = .ScaleAspectFill
+		
+		if originalImage.size != CGSize(width: 1080.0, height: 1920.0) {
+			imageView.contentMode = .ScaleAspectFit
+		}
+		
 		view.addSubview(imageView)
 		
 		tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -73,6 +86,8 @@ class ImageEditor: NSObject {
 		view.addGestureRecognizer(tapRecognizer!)
 		
 		self.setupButtons()
+		
+		delegate?.imageEditorDidLoad()
 	}
 	
 	/***
@@ -123,20 +138,8 @@ class ImageEditor: NSObject {
 	func saveImage() {
 		
 		self.beginActivityIndicatorView()
-		UIImageWriteToSavedPhotosAlbum(editedImage, self, "image:didSaveWithError:contextInfo:", nil)
+		UIImageWriteToSavedPhotosAlbum(currentImage, self, "image:didSaveWithError:contextInfo:", nil)
 	}
-    
-    /***
-     Returns an image with contents of imageView and all subviews in the hierarchy
-    ***/
-    func getEditedImage() -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(imageView.frame.size, true, 0)
-        imageView.drawViewHierarchyInRect(imageView.bounds, afterScreenUpdates: true)
-        let result = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return result
-    }
 	
 	func beginActivityIndicatorView() {
 		
@@ -166,7 +169,7 @@ class ImageEditor: NSObject {
 	}
 	
 	func sharePhoto() {
-		delegate?.imageEditorDidShare(editedImage)
+		delegate?.imageEditorDidShare(currentImage)
 	}
 	
     func cancelEditing() {

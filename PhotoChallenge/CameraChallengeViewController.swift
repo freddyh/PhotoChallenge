@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+//Ideas:
+//Use Core Image to add filters
+//avcapturevideodataoutput
+
 
 /***
 This is the initial view controller whose view is a feed from the camera
@@ -70,6 +74,7 @@ class CameraChallengeViewController: UIViewController  {
 					previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
 					
 					cameraView.layer.insertSublayer(previewLayer!, below: captureButton.layer)
+					
 				}
 			}
 		} catch let error {
@@ -132,6 +137,7 @@ class CameraChallengeViewController: UIViewController  {
 			
 			videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
 			
+			
 			stillImageOutput?.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: { (sampleBuffer, error) -> Void in
 				
 				if sampleBuffer != nil {
@@ -143,7 +149,7 @@ class CameraChallengeViewController: UIViewController  {
 					let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
 					let dataProvider = CGDataProviderCreateWithCFData(imageData)
 					let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
-					let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+					let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Up)
 					
 					self.imageEditorView = ImageEditor(sourceView: self.view, originalImage: image)
 					self.imageEditorView.delegate = self
@@ -155,6 +161,9 @@ class CameraChallengeViewController: UIViewController  {
 }
 
 extension CameraChallengeViewController : ImageEditorDelegate {
+	
+	func imageEditorDidLoad() {
+	}
 	
 	func imageEditorDidCancel() {
 		imageEditorView = nil
@@ -202,7 +211,7 @@ extension CameraChallengeViewController : UIImagePickerControllerDelegate, UINav
         
         dismissViewControllerAnimated(true, completion: nil)
         if let image = info[UIImagePickerControllerOriginalImage] {
-            self.imageEditorView = ImageEditor(sourceView: self.view, originalImage: image as! UIImage)
+            self.imageEditorView = ImageEditor(sourceView: self.cameraView, originalImage: image as! UIImage)
             self.imageEditorView.delegate = self
         }
         
@@ -213,3 +222,4 @@ extension CameraChallengeViewController : UIImagePickerControllerDelegate, UINav
         print("image picker did cancel")
     }
 }
+
