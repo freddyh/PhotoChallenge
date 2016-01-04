@@ -16,8 +16,6 @@ struct Constants {
 	static let space:CGFloat = 8.0
 }
 
-let FilterNames = ["CIColorInvert", "CIColorPosterize", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone"]
-
 protocol ImageEditorDelegate : class {
 	func imageEditorDidLoad()
 	func imageEditorDidCancel()
@@ -30,7 +28,10 @@ class ImageEditor: NSObject {
 	weak var delegate: ImageEditorDelegate?
 	weak var superView: UIView!
 	var view: UIView!
-	var imageView: UIImageView!
+
+	var captionableImageView: CaptionableImageView!
+	
+	
 	var saveButton: UIButton!
 	var cancelButton: UIButton!
 	var shareButton: UIButton!
@@ -39,18 +40,6 @@ class ImageEditor: NSObject {
 	var textField: UITextField!
 	var originalImage: UIImage!
 	var filterIndex: Int = -1
-	
-	var currentImage: UIImage {
-		get {
-			
-			UIGraphicsBeginImageContextWithOptions(imageView.frame.size, true, 0)
-			imageView.drawViewHierarchyInRect(imageView.bounds, afterScreenUpdates: true)
-			let result = UIGraphicsGetImageFromCurrentImageContext()
-			UIGraphicsEndImageContext()
-			
-			return result
-		}
-	}
 	
 	var tapRecognizer:UITapGestureRecognizer?
 	
@@ -70,19 +59,9 @@ class ImageEditor: NSObject {
 		view = UIView(frame: superView.frame)
 		superView.addSubview(view)
 		
-		imageView = UIImageView(frame: superView.frame)
-		let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "updateImageWithFilter")
-		swipeRecognizer.direction = .Left
-		swipeRecognizer.numberOfTouchesRequired = 1
-		imageView.addGestureRecognizer(swipeRecognizer)
-		imageView.userInteractionEnabled = true
-		imageView.image = originalImage
+		captionableImageView = CaptionableImageView(frame: superView.frame)
 		
-//		if originalImage.size != CGSize(width: 1080.0, height: 1920.0) {
-//			imageView.contentMode = .ScaleAspectFill
-//		}
-		
-		view.addSubview(imageView)
+		view.addSubview(captionableImageView)
 		
 		tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
 		tapRecognizer?.cancelsTouchesInView = false
@@ -93,23 +72,7 @@ class ImageEditor: NSObject {
 		delegate?.imageEditorDidLoad()
 	}
 	
-	func updateImageWithFilter() {
-		
-		filterIndex++
-		if filterIndex == FilterNames.count {
-			filterIndex = -1
-			imageView.image = originalImage
-		} else {
-		
-			let filterName = FilterNames[filterIndex]
-			let stillImageFilter = CIFilter(name: filterName, withInputParameters: [kCIInputImageKey:CIImage(image: originalImage)!])
-			
-			imageView.image = UIImage(CIImage: stillImageFilter?.valueForKey(kCIOutputImageKey) as! CIImage, scale: 1.0, orientation: UIImageOrientation.Up)
-		}
-		//if filteris out of range then return original image with no filter
-		
-		
-	}
+	
 	
 	/***
 	Puts the text field on the center of the screen with keyboard
@@ -159,7 +122,7 @@ class ImageEditor: NSObject {
 	func saveImage() {
 		
 		self.beginActivityIndicatorView()
-		UIImageWriteToSavedPhotosAlbum(currentImage, self, "image:didSaveWithError:contextInfo:", nil)
+		UIImageWriteToSavedPhotosAlbum(captionableImageView.currentImage, self, "image:didSaveWithError:contextInfo:", nil)
 	}
 	
 	func beginActivityIndicatorView() {
@@ -190,7 +153,7 @@ class ImageEditor: NSObject {
 	}
 	
 	func sharePhoto() {
-		delegate?.imageEditorDidShare(currentImage)
+		delegate?.imageEditorDidShare(captionableImageView.currentImage)
 	}
 	
     func cancelEditing() {
@@ -223,25 +186,9 @@ extension ImageEditor : UITextFieldDelegate {
 		self.removeTextField()
 	}
 	
-	func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-		
-		
-		return true
-	}
-	
-    /***
-     Add a subclass of UILabel to the imageView hierarchy
-    ***/
 	func removeTextField() {
-		self.addTextLabelWithText(textField.text!)
+		
+		captionableImageView.insertCaptionWithText(textField.text!)
 		textField.removeFromSuperview()
-	}
-	
-	func addTextLabelWithText(text:String) {
-		let label = PhotoLabel()
-		label.text = text
-		label.sizeToFit()
-		label.center = view.center
-		imageView.addSubview(label)
 	}
 }
