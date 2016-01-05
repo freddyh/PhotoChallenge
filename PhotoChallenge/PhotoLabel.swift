@@ -21,6 +21,7 @@ class PhotoLabel: UILabel {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		userInteractionEnabled = true
+		numberOfLines = 0
         
 		panRecognizer = UIPanGestureRecognizer(target: self, action: "move")
 		panRecognizer?.delegate = self
@@ -81,19 +82,16 @@ class PhotoLabel: UILabel {
 		switch sizeStage {
 			case 0:
 				//Center the label and size it similar to textField
-				self.frame = CGRectMake(0, 0, (self.superview?.bounds.width)!, 20)
 				self.center = (self.superview?.center)!
-				self.font = UIFont.systemFontOfSize(18)
-				self.numberOfLines = 1
+				self.font = UIFont.systemFontOfSize(25)
 			
 			case 1:
 				//Increase frame size and font
-				let height = (self.superview?.bounds.height)! * 0.7
+				let height = (self.superview?.bounds.height)! * 0.4
 				self.textAlignment = .Center
 				self.frame = CGRectMake(0, 0, (self.superview?.bounds.width)!, height)
 				self.center = (self.superview?.center)!
 				self.font = UIFont.systemFontOfSize(50)
-				self.numberOfLines = 0
 			
 			case 2:
 				//Right align text

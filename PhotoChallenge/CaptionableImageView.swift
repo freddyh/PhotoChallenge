@@ -12,21 +12,26 @@ let FilterNames = ["CIColorInvert", "CIColorPosterize", "CIPhotoEffectChrome", "
 
 class CaptionableImageView: UIImageView {
 
-	var originalImage:UIImage?
+	
+	var originalImage: UIImage!
 	var filterIndex:Int = -1
 
-	override init(frame: CGRect) {
-		super.init(frame: frame)
+	override init(image: UIImage?, highlightedImage: UIImage?) {
+		super.init(image: image, highlightedImage: highlightedImage)
+		
+		originalImage = image
 		
 		userInteractionEnabled = true
 		let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: "updateFilterIndex:")
 		swipeLeftRecognizer.direction = .Left
 		swipeLeftRecognizer.numberOfTouchesRequired = 1
+		swipeLeftRecognizer.delegate = self
 		
 		let swipeRightRecognizer = UISwipeGestureRecognizer(target: self, action: "updateFilterIndex:")
 		swipeRightRecognizer.direction = .Right
 		swipeRightRecognizer.numberOfTouchesRequired = 1
-
+		swipeRightRecognizer.delegate = self
+		
 		addGestureRecognizer(swipeLeftRecognizer)
 		addGestureRecognizer(swipeRightRecognizer)
 	}
@@ -48,21 +53,31 @@ class CaptionableImageView: UIImageView {
 	
 	func updateFilterIndex(sender:UISwipeGestureRecognizer) {
 		
+		
 		switch sender.direction {
 		case UISwipeGestureRecognizerDirection.Right:
-			filterIndex--
+			if filterIndex == -1 {
+				filterIndex = FilterNames.count - 1
+			} else {
+				filterIndex--
+			}
 		case UISwipeGestureRecognizerDirection.Left:
-			filterIndex++
+			if filterIndex == FilterNames.count - 1 {
+				filterIndex = -1
+			} else {
+				filterIndex++
+			}
 		default:break
 		}
 		
-		if filterIndex == FilterNames.count {
-			filterIndex = -1
-			image = originalImage
-		} else if filterIndex == -1 {
-			filterIndex += FilterNames.count
-		} else {
+		updateImageWithFilter()
+	}
+	
+	func updateImageWithFilter() {
 		
+		if filterIndex == -1 {
+			image = originalImage!
+		} else {
 			let filterName = FilterNames[filterIndex]
 			let stillImageFilter = CIFilter(name: filterName, withInputParameters: [kCIInputImageKey:CIImage(image: originalImage!)!])
 			
@@ -74,9 +89,29 @@ class CaptionableImageView: UIImageView {
 		
 		let label = PhotoLabel()
 		label.text = text
-		label.sizeToFit()
+		label.frame = CGRectMake(0, 0, (self.superview?.bounds.width)!, 60)
 		label.center = center
 		addSubview(label)
 	}
 	
+}
+
+extension CaptionableImageView : UIGestureRecognizerDelegate {
+	
+	
+	//Prevent the filter from changing if the user is trying to drag a label
+	func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		
+
+		if subviews.count > 0 {
+			for photoLabel in subviews {
+				if (photoLabel as! PhotoLabel).panRecognizer == otherGestureRecognizer {
+					return true
+				}
+				
+			}
+		}
+
+		return false
+	}
 }

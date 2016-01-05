@@ -28,10 +28,7 @@ class ImageEditor: NSObject {
 	weak var delegate: ImageEditorDelegate?
 	weak var superView: UIView!
 	var view: UIView!
-
 	var captionableImageView: CaptionableImageView!
-	
-	
 	var saveButton: UIButton!
 	var cancelButton: UIButton!
 	var shareButton: UIButton!
@@ -39,7 +36,6 @@ class ImageEditor: NSObject {
 	var activityIndicator: UIActivityIndicatorView!
 	var textField: UITextField!
 	var originalImage: UIImage!
-	var filterIndex: Int = -1
 	
 	var tapRecognizer:UITapGestureRecognizer?
 	
@@ -59,8 +55,8 @@ class ImageEditor: NSObject {
 		view = UIView(frame: superView.frame)
 		superView.addSubview(view)
 		
-		captionableImageView = CaptionableImageView(frame: superView.frame)
-		
+		captionableImageView = CaptionableImageView(image: originalImage, highlightedImage: nil)
+		captionableImageView.frame = view.frame
 		view.addSubview(captionableImageView)
 		
 		tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
