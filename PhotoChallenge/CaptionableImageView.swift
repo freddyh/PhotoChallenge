@@ -8,11 +8,10 @@
 
 import UIKit
 
-let FilterNames = ["CIColorInvert", "CIColorPosterize", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone"]
+let FilterNames = ["CIComicEffect", "CIColorInvert", "CIColorPosterize", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone", "CICrystallize", "CIEdges", "CIEdgeWork", "CIHexagonalPixellate"]
 
 class CaptionableImageView: UIImageView {
 
-	
 	var originalImage: UIImage!
 	var filterIndex:Int = -1
 

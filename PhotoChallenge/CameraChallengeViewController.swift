@@ -89,6 +89,10 @@ class CameraChallengeViewController: UIViewController  {
 		captureSession?.startRunning()
 	}
 	
+	override func viewDidDisappear(animated: Bool) {
+		super.viewDidDisappear(animated)
+	}
+	
 	@IBAction func switchCameraButtonTapped(sender: UIButton) {
 		
 		//Get a reference to current device and current camera position.
@@ -153,6 +157,7 @@ class CameraChallengeViewController: UIViewController  {
 					
 					self.imageEditorView = ImageEditor(sourceView: self.view, originalImage: image)
 					self.imageEditorView.delegate = self
+					self.captureSession?.stopRunning()
 				}
 			})
 		}

@@ -53,6 +53,7 @@ class ImageEditor: NSObject {
 		
 		superView = sourceView
 		view = UIView(frame: superView.frame)
+		view.backgroundColor = UIColor.blackColor()
 		superView.addSubview(view)
 		
 		captionableImageView = CaptionableImageView(image: originalImage, highlightedImage: nil)
