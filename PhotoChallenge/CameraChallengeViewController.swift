@@ -34,10 +34,13 @@ class CameraChallengeViewController: UIViewController  {
 	var previewLayer: AVCaptureVideoPreviewLayer?
     
     var isEditingPhoto: Bool = false
-	var imageEditorView: ImageEditor!
+	var imageEditorViewController: ImageEditorViewController!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		navigationController?.navigationBarHidden = true
+		imageEditorViewController = ImageEditorViewController()
+		imageEditorViewController.delegate = self
 		
 		
 		/***
@@ -89,11 +92,8 @@ class CameraChallengeViewController: UIViewController  {
 		captureSession?.startRunning()
 	}
 	
-	override func viewDidDisappear(animated: Bool) {
-		super.viewDidDisappear(animated)
-	}
-	
 	@IBAction func switchCameraButtonTapped(sender: UIButton) {
+		
 		
 		//Get a reference to current device and current camera position.
 		//Toggle the position for next device
@@ -129,7 +129,6 @@ class CameraChallengeViewController: UIViewController  {
 	@IBAction func tappedCaptureButton(sender: CameraCaptureButton) {
 		
 		if !isEditingPhoto {
-			
 			self.takePhoto()
 			self.isEditingPhoto = true
 		}
@@ -155,8 +154,10 @@ class CameraChallengeViewController: UIViewController  {
 					let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
 					let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
 					
-					self.imageEditorView = ImageEditor(sourceView: self.view, originalImage: image)
-					self.imageEditorView.delegate = self
+					self.imageEditorViewController.originalImage = image
+					self.navigationController?.pushViewController(self.imageEditorViewController, animated: false)
+					
+					
 					self.captureSession?.stopRunning()
 				}
 			})
@@ -171,32 +172,19 @@ extension CameraChallengeViewController : ImageEditorDelegate {
 	}
 	
 	func imageEditorDidCancel() {
-		imageEditorView = nil
+		self.navigationController?.popViewControllerAnimated(false)
 		isEditingPhoto = false
 	}
 		
 	func imageEditorDidSaveImage(image:UIImage) {
-		self.showSavedPhotoAlert()
+		
 	}
 	
-	func imageEditorDidShare(image:UIImage) {
-		let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-		presentViewController(activityController, animated: true, completion: nil)
+	func imageEditorDidShare() {
+		
 	}
 	
-	func showSavedPhotoAlert() {
-		
-        /***
-         Show an alert that confirms the photo was saved and give an option to share the photo
-         If user pressed "Share" then the image is passed to a UIActivityViewController
-        ***/
-		let successAlert = UIAlertController(title: "Successfully Saved", message: "There is a new photo in your library.", preferredStyle: .Alert)
-		let doneAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        
-		successAlert.addAction(doneAction)
-		
-		presentViewController(successAlert, animated: true, completion: nil)
-	}
+	
 }
 
 extension CameraChallengeViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -216,15 +204,17 @@ extension CameraChallengeViewController : UIImagePickerControllerDelegate, UINav
         
         dismissViewControllerAnimated(true, completion: nil)
         if let image = info[UIImagePickerControllerOriginalImage] {
-            self.imageEditorView = ImageEditor(sourceView: self.cameraView, originalImage: image as! UIImage)
-            self.imageEditorView.delegate = self
+			
+			self.imageEditorViewController.originalImage = image as! UIImage
+			self.navigationController?.pushViewController(self.imageEditorViewController, animated: false)
+
         }
         
         
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        print("image picker did cancel")
+		dismissViewControllerAnimated(true, completion: nil)
     }
 }
 

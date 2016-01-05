@@ -13,12 +13,10 @@ let FilterNames = ["CIComicEffect", "CIColorInvert", "CIColorPosterize", "CIPhot
 class CaptionableImageView: UIImageView {
 
 	var originalImage: UIImage!
-	var filterIndex:Int = -1
-
-	override init(image: UIImage?, highlightedImage: UIImage?) {
-		super.init(image: image, highlightedImage: highlightedImage)
-		
-		originalImage = image
+	private var filterIndex:Int = -1
+	
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
 		
 		userInteractionEnabled = true
 		let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: "updateFilterIndex:")
@@ -33,10 +31,6 @@ class CaptionableImageView: UIImageView {
 		
 		addGestureRecognizer(swipeLeftRecognizer)
 		addGestureRecognizer(swipeRightRecognizer)
-	}
-
-	required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
 	}
 	
 	var currentImage: UIImage {
@@ -84,13 +78,19 @@ class CaptionableImageView: UIImageView {
 		}
 	}
 	
-	internal func insertCaptionWithText(text:String) {
+	func insertCaptionWithText(text:String) {
 		
 		let label = PhotoLabel()
 		label.text = text
 		label.frame = CGRectMake(0, 0, (self.superview?.bounds.width)!, 60)
 		label.center = center
 		addSubview(label)
+	}
+	
+	func removeCaptions() {
+		for photoLabel in subviews {
+			photoLabel.removeFromSuperview()
+		}
 	}
 	
 }

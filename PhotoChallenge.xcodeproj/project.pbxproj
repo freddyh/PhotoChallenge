@@ -12,10 +12,11 @@
 		464285261C31B1B8002270BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 464285251C31B1B8002270BE /* Assets.xcassets */; };
 		464285291C31B1B8002270BE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 464285271C31B1B8002270BE /* LaunchScreen.storyboard */; };
 		4686176C1C3327DE00F569BE /* CameraChallengeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4686176B1C3327DE00F569BE /* CameraChallengeViewController.swift */; };
-		468617901C3353D300F569BE /* ImageEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4686178F1C3353D300F569BE /* ImageEditor.swift */; };
 		468617921C33AB6200F569BE /* PhotoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468617911C33AB6200F569BE /* PhotoLabel.swift */; };
 		468621A31C34765000CA747D /* CameraCaptureButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468621A21C34765000CA747D /* CameraCaptureButton.swift */; };
 		468EB5381C3A271100A484F1 /* CaptionableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468EB5371C3A271100A484F1 /* CaptionableImageView.swift */; };
+		46D7C3C81C3B88D2005FFD2A /* ImageEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D7C3C61C3B88D2005FFD2A /* ImageEditorViewController.swift */; };
+		46D7C3C91C3B88D2005FFD2A /* ImageEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46D7C3C71C3B88D2005FFD2A /* ImageEditorViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,10 +27,11 @@
 		464285281C31B1B8002270BE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4642852A1C31B1B8002270BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4686176B1C3327DE00F569BE /* CameraChallengeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraChallengeViewController.swift; sourceTree = "<group>"; };
-		4686178F1C3353D300F569BE /* ImageEditor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEditor.swift; sourceTree = "<group>"; };
 		468617911C33AB6200F569BE /* PhotoLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLabel.swift; sourceTree = "<group>"; };
 		468621A21C34765000CA747D /* CameraCaptureButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraCaptureButton.swift; sourceTree = "<group>"; };
 		468EB5371C3A271100A484F1 /* CaptionableImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionableImageView.swift; sourceTree = "<group>"; };
+		46D7C3C61C3B88D2005FFD2A /* ImageEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageEditorViewController.swift; sourceTree = "<group>"; };
+		46D7C3C71C3B88D2005FFD2A /* ImageEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageEditorViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,12 +68,13 @@
 				464285251C31B1B8002270BE /* Assets.xcassets */,
 				468621A21C34765000CA747D /* CameraCaptureButton.swift */,
 				4686176B1C3327DE00F569BE /* CameraChallengeViewController.swift */,
-				4686178F1C3353D300F569BE /* ImageEditor.swift */,
+				468EB5371C3A271100A484F1 /* CaptionableImageView.swift */,
+				46D7C3C61C3B88D2005FFD2A /* ImageEditorViewController.swift */,
+				46D7C3C71C3B88D2005FFD2A /* ImageEditorViewController.xib */,
 				4642852A1C31B1B8002270BE /* Info.plist */,
 				464285271C31B1B8002270BE /* LaunchScreen.storyboard */,
 				464285221C31B1B8002270BE /* Main.storyboard */,
 				468617911C33AB6200F569BE /* PhotoLabel.swift */,
-				468EB5371C3A271100A484F1 /* CaptionableImageView.swift */,
 			);
 			path = PhotoChallenge;
 			sourceTree = "<group>";
@@ -138,6 +141,7 @@
 				464285291C31B1B8002270BE /* LaunchScreen.storyboard in Resources */,
 				464285261C31B1B8002270BE /* Assets.xcassets in Resources */,
 				464285241C31B1B8002270BE /* Main.storyboard in Resources */,
+				46D7C3C91C3B88D2005FFD2A /* ImageEditorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,9 +155,9 @@
 				4686176C1C3327DE00F569BE /* CameraChallengeViewController.swift in Sources */,
 				468EB5381C3A271100A484F1 /* CaptionableImageView.swift in Sources */,
 				468621A31C34765000CA747D /* CameraCaptureButton.swift in Sources */,
+				46D7C3C81C3B88D2005FFD2A /* ImageEditorViewController.swift in Sources */,
 				468617921C33AB6200F569BE /* PhotoLabel.swift in Sources */,
 				4642851F1C31B1B8002270BE /* AppDelegate.swift in Sources */,
-				468617901C3353D300F569BE /* ImageEditor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
