@@ -61,6 +61,7 @@ class ImageEditorViewController: UIViewController {
 	
 	@IBAction func save(sender: UIBarButtonItem) {
 		
+		self.view.bringSubviewToFront(activityIndicator)
 		self.beginActivityIndicatorView()
 		UIImageWriteToSavedPhotosAlbum(captionableImageView.currentImage, self, "image:didSaveWithError:contextInfo:", nil)
 	}

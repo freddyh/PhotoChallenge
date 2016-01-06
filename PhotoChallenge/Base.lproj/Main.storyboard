@@ -6,10 +6,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Camera Challenge View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="tx7-MB-2yE">
             <objects>
-                <viewController id="XjF-G8-VbH" customClass="CameraChallengeViewController" customModule="PhotoChallenge" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XjF-G8-VbH" customClass="CameraViewController" customModule="PhotoChallenge" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zym-kO-CpQ"/>
                         <viewControllerLayoutGuide type="bottom" id="bgP-kX-ZdY"/>

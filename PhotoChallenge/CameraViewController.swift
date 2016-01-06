@@ -19,7 +19,7 @@ This is the initial view controller whose view is a feed from the camera
 One tap will take a photo and open the photo in the ImageEditor
 ***/
 
-class CameraChallengeViewController: UIViewController  {
+class CameraViewController: UIViewController  {
 
     
 	@IBOutlet weak var cameraView: UIView!
@@ -166,7 +166,7 @@ class CameraChallengeViewController: UIViewController  {
 
 }
 
-extension CameraChallengeViewController : ImageEditorDelegate {
+extension CameraViewController : ImageEditorDelegate {
 	
 	func imageEditorDidLoad() {
 	}
@@ -187,7 +187,7 @@ extension CameraChallengeViewController : ImageEditorDelegate {
 	
 }
 
-extension CameraChallengeViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension CameraViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBAction func openPhotoLibrary(sender: UIButton) {
         
