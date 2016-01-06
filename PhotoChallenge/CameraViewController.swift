@@ -1,5 +1,5 @@
 //
-//  CameraChallengeViewController.swift
+//  CameraViewController.swift
 //  PhotoChallenge
 //
 //  Created by Freddy Hernandez on 12/29/15.
@@ -8,11 +8,6 @@
 
 import UIKit
 import AVFoundation
-
-//Ideas:
-//Use Core Image to add filters
-//avcapturevideodataoutput
-
 
 /***
 This is the initial view controller whose view is a feed from the camera
@@ -23,7 +18,7 @@ class CameraViewController: UIViewController  {
 
     
 	@IBOutlet weak var cameraView: UIView!
-	@IBOutlet weak var captureButton: CameraCaptureButton!
+	@IBOutlet weak var captureButton: CaptureButton!
 	@IBOutlet weak var switchCameraButton: UIButton!
 	
     /***
@@ -46,7 +41,8 @@ class CameraViewController: UIViewController  {
 		/***
 		Capture session coordinates the flow of data between inputs and outputs
 		Session Preset is a capture setting for 1080p quality video
-		1920pixels by 1080pixels
+		1920x1080 pixels front camera
+		720x?pixelsfor back camera
 		***/
 		captureSession = AVCaptureSession()
 		captureSession?.sessionPreset = AVCaptureSessionPresetHigh
@@ -94,13 +90,12 @@ class CameraViewController: UIViewController  {
 	
 	@IBAction func switchCameraButtonTapped(sender: UIButton) {
 		
-		
 		//Get a reference to current device and current camera position.
 		//Toggle the position for next device
 		let currentCameraInput = captureSession?.inputs.first as! AVCaptureDeviceInput
 		let nextCameraPosition:AVCaptureDevicePosition = currentCameraInput.device.position == .Front ? .Back : .Front
 		
-		//Instantiate new device
+		//Instantiate new device from array of devices with correct camera position
 		var nextCameraDevice:AVCaptureDevice?
 		for device in AVCaptureDevice.devices() {
 			if (device as! AVCaptureDevice).position == nextCameraPosition {
@@ -126,7 +121,7 @@ class CameraViewController: UIViewController  {
 		
 	}
 	
-	@IBAction func tappedCaptureButton(sender: CameraCaptureButton) {
+	@IBAction func tappedCaptureButton(sender: CaptureButton) {
 		
 		if !isEditingPhoto {
 			self.takePhoto()
@@ -146,7 +141,7 @@ class CameraViewController: UIViewController  {
 				if sampleBuffer != nil {
 					
                     /***
-                     sampleBuffer contains data from the camera that is converted to UIImage
+                     sampleBuffer contains NSData, convert it to UIImage
                      Pass the UIImage to the imageEditor
                     ***/
 					let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
@@ -156,7 +151,6 @@ class CameraViewController: UIViewController  {
 					
 					self.imageEditorViewController.originalImage = image
 					self.navigationController?.pushViewController(self.imageEditorViewController, animated: false)
-					
 					
 					self.captureSession?.stopRunning()
 				}

@@ -21,16 +21,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvb-Lf-wQm">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP9-9U-HKk" customClass="CameraCaptureButton" customModule="PhotoChallenge" customModuleProvider="target">
-                                        <rect key="frame" x="270" y="512" width="60" height="60"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="G31-M7-IP5"/>
-                                            <constraint firstAttribute="height" constant="60" id="Pm4-7Y-mZ3"/>
-                                        </constraints>
-                                        <connections>
-                                            <action selector="tappedCaptureButton:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Wse-Wx-nir"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-Zy-x2V" userLabel="Switch Camera Button">
                                         <rect key="frame" x="520" y="20" width="60" height="60"/>
                                         <constraints>
@@ -45,11 +35,21 @@
                                             <action selector="switchCameraButtonTapped:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Mu6-Hd-ce9"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vl2-qa-7jy" userLabel="Photo Library Button">
-                                        <rect key="frame" x="20" y="512" width="60" height="60"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP9-9U-HKk" customClass="CaptureButton" customModule="PhotoChallenge" customModuleProvider="target">
+                                        <rect key="frame" x="270" y="512" width="60" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="Ccd-rZ-eoo"/>
-                                            <constraint firstAttribute="width" constant="60" id="MAB-J4-RIs"/>
+                                            <constraint firstAttribute="width" constant="60" id="G31-M7-IP5"/>
+                                            <constraint firstAttribute="height" constant="60" id="Pm4-7Y-mZ3"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="tappedCaptureButton:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Wse-Wx-nir"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vl2-qa-7jy" userLabel="Photo Library Button">
+                                        <rect key="frame" x="175" y="512" width="60" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="4zY-YT-O1s"/>
+                                            <constraint firstAttribute="width" constant="60" id="KRb-2N-pAa"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                         <state key="normal" title="❐">
@@ -65,14 +65,16 @@
                                     <constraint firstAttribute="bottom" secondItem="bHk-Zy-x2V" secondAttribute="bottom" constant="8" id="4JR-5Q-knV"/>
                                     <constraint firstItem="bHk-Zy-x2V" firstAttribute="top" secondItem="xvb-Lf-wQm" secondAttribute="top" constant="20" id="7gq-8B-pkD"/>
                                     <constraint firstItem="vl2-qa-7jy" firstAttribute="leading" secondItem="xvb-Lf-wQm" secondAttribute="leading" constant="20" id="Bss-6m-dq0"/>
-                                    <constraint firstItem="vl2-qa-7jy" firstAttribute="centerY" secondItem="KP9-9U-HKk" secondAttribute="centerY" id="SeN-O4-WCD"/>
+                                    <constraint firstItem="KP9-9U-HKk" firstAttribute="leading" secondItem="vl2-qa-7jy" secondAttribute="trailing" constant="35" id="T7i-8x-Rji"/>
                                     <constraint firstItem="bHk-Zy-x2V" firstAttribute="leading" secondItem="xvb-Lf-wQm" secondAttribute="leading" constant="8" id="Zgh-bl-rax"/>
                                     <constraint firstItem="KP9-9U-HKk" firstAttribute="centerX" secondItem="xvb-Lf-wQm" secondAttribute="centerX" id="cpK-XB-SE9"/>
                                     <constraint firstItem="KP9-9U-HKk" firstAttribute="bottom" secondItem="xvb-Lf-wQm" secondAttribute="bottomMargin" constant="-20" id="jvq-pK-GsW"/>
+                                    <constraint firstItem="vl2-qa-7jy" firstAttribute="centerY" secondItem="KP9-9U-HKk" secondAttribute="centerY" id="kvf-zE-XcA"/>
                                     <constraint firstAttribute="trailing" secondItem="bHk-Zy-x2V" secondAttribute="trailing" constant="20" id="qp1-Iy-uNw"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="Bss-6m-dq0"/>
                                         <exclude reference="4JR-5Q-knV"/>
                                         <exclude reference="Zgh-bl-rax"/>
                                     </mask>
