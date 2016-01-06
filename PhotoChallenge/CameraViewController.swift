@@ -163,28 +163,14 @@ class CameraViewController: UIViewController  {
 			})
 		}
 	}
-
 }
 
 extension CameraViewController : ImageEditorDelegate {
-	
-	func imageEditorDidLoad() {
-	}
 	
 	func imageEditorDidCancel() {
 		self.navigationController?.popViewControllerAnimated(false)
 		isEditingPhoto = false
 	}
-		
-	func imageEditorDidSaveImage(image:UIImage) {
-		
-	}
-	
-	func imageEditorDidShare() {
-		
-	}
-	
-	
 }
 
 extension CameraViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -199,18 +185,15 @@ extension CameraViewController : UIImagePickerControllerDelegate, UINavigationCo
         }
     }
     
-    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         dismissViewControllerAnimated(true, completion: nil)
         if let image = info[UIImagePickerControllerOriginalImage] {
 			
 			self.imageEditorViewController.originalImage = image as! UIImage
-			self.navigationController?.pushViewController(self.imageEditorViewController, animated: false)
+			self.navigationController?.pushViewController(self.imageEditorViewController, animated: true)
 
         }
-        
-        
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {

@@ -11,6 +11,7 @@
                 <outlet property="activityIndicator" destination="ccc-90-wGG" id="LqR-DB-3np"/>
                 <outlet property="captionableImageView" destination="HSY-PH-h5D" id="hoe-9M-lbD"/>
                 <outlet property="saveButton" destination="lGg-Vy-88O" id="SAw-2Q-WYB"/>
+                <outlet property="textField" destination="8Zp-Ec-f00" id="6dO-Nk-sdH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -19,6 +20,15 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8Zp-Ec-f00">
+                    <rect key="frame" x="20" y="285" width="560" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="cbq-Ui-r6O"/>
+                    </connections>
+                </textField>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="ccc-90-wGG">
                     <rect key="frame" x="282" y="281" width="37" height="37"/>
                 </activityIndicatorView>
@@ -77,13 +87,16 @@
             <constraints>
                 <constraint firstItem="ccc-90-wGG" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="6ZX-dZ-qmn"/>
                 <constraint firstItem="HSY-PH-h5D" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="6ld-ou-DFH"/>
+                <constraint firstItem="8Zp-Ec-f00" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="Dm5-9K-EuK"/>
                 <constraint firstItem="djB-S3-RIz" firstAttribute="centerY" secondItem="biH-rp-IWw" secondAttribute="centerY" id="Eik-ve-dJX"/>
                 <constraint firstAttribute="bottom" secondItem="VZ6-d5-5Qq" secondAttribute="bottom" id="HFz-a0-zyl"/>
                 <constraint firstItem="VZ6-d5-5Qq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UHR-tE-ZTv"/>
+                <constraint firstItem="8Zp-Ec-f00" firstAttribute="centerX" secondItem="ccc-90-wGG" secondAttribute="centerX" id="VRa-Cv-e5C"/>
                 <constraint firstItem="biH-rp-IWw" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailingMargin" constant="15" id="YpB-bS-Jkx"/>
                 <constraint firstItem="ccc-90-wGG" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="bSa-ms-HYe"/>
                 <constraint firstItem="djB-S3-RIz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="cFD-gS-9q0"/>
                 <constraint firstAttribute="trailing" secondItem="VZ6-d5-5Qq" secondAttribute="trailing" id="fzA-v7-IOm"/>
+                <constraint firstItem="8Zp-Ec-f00" firstAttribute="centerY" secondItem="ccc-90-wGG" secondAttribute="centerY" id="hvA-Yh-foQ"/>
                 <constraint firstItem="biH-rp-IWw" firstAttribute="top" secondItem="HSY-PH-h5D" secondAttribute="top" constant="10" id="joi-gM-Mkc"/>
                 <constraint firstAttribute="bottom" secondItem="HSY-PH-h5D" secondAttribute="bottom" id="slp-QN-amc"/>
                 <constraint firstItem="HSY-PH-h5D" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="utg-cf-B10"/>
