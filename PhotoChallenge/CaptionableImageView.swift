@@ -8,18 +8,27 @@
 
 import UIKit
 
-let FilterNames = ["CIComicEffect", "CIColorInvert", "CIColorPosterize", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone", "CICrystallize", "CIEdges", "CIEdgeWork", "CIHexagonalPixellate"]
-
 class CaptionableImageView: UIImageView {
 
 	var originalImage: UIImage!
 	private var filterIndex:Int = -1
+//    let allFilters = ["CIComicEffect", "CIColorInvert", "CIColorPosterize", "CIPhotoEffectChrome", "CIPhotoEffectFade", "CIPhotoEffectInstant", "CIPhotoEffectMono", "CIPhotoEffectNoir", "CIPhotoEffectProcess", "CIPhotoEffectTonal", "CIPhotoEffectTransfer", "CISepiaTone", "CICrystallize", "CIEdges", "CIEdgeWork", "CIHexagonalPixellate"]
+//    let allFilters = CIFilter.filterNames(inCategory: kCICategoryStillImage)
+    let allFilters = CIFilter.filterNames(inCategory: kCICategoryStillImage).filter {
+        // make sure these filters have the keys that i will be using
+        if let filter = CIFilter.init(name: $0) {
+            let hasInputImage = filter.inputKeys.contains(kCIInputImageKey)
+            let hasOutputImage = filter.outputKeys.contains(kCIOutputImageKey)
+            return hasInputImage && hasOutputImage
+        } else {
+            return false
+        }
+    }
 	
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		
         isUserInteractionEnabled = true
-        
         
         let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(CaptionableImageView.updateFilterIndex))
         swipeLeftRecognizer.direction = .left
@@ -52,12 +61,12 @@ class CaptionableImageView: UIImageView {
 		switch sender.direction {
         case .right:
 			if filterIndex == -1 {
-				filterIndex = FilterNames.count - 1
+				filterIndex = allFilters.count - 1
 			} else {
 				filterIndex -= -1
 			}
         case .left:
-			if filterIndex == FilterNames.count - 1 {
+			if filterIndex == allFilters.count - 1 {
 				filterIndex = -1
 			} else {
 				filterIndex += 1
@@ -74,10 +83,27 @@ class CaptionableImageView: UIImageView {
 		if filterIndex == -1 {
 			image = originalImage!
 		} else {
-			let filterName = FilterNames[filterIndex]
-			let stillImageFilter = CIFilter(name: filterName, parameters: [kCIInputImageKey:CIImage(image: originalImage!)!])
-			
-            image = UIImage(ciImage: stillImageFilter?.value(forKey: kCIOutputImageKey) as! CIImage, scale: 1.0, orientation: UIImage.Orientation.up)
+			let filterName = allFilters[filterIndex]
+            let ciImage = CIImage(image: originalImage!)!
+            if let stillImageFilter = CIFilter(name: filterName, parameters: [kCIInputImageKey: ciImage]) {
+                if (filterName == "CIColorCubesMixedWithMask") {
+                    print("todo: why does this filter crash me")
+                    return
+                }
+                stillImageFilter.setDefaults()
+                print("filter succeeded: \(filterName)")
+                
+                if let outputImage = stillImageFilter.outputImage {
+                    print("extent: \(outputImage.extent)")
+                    let cropped = outputImage.cropped(to: ciImage.extent)
+                    image = UIImage(ciImage: cropped, scale: 1.0, orientation: UIImage.Orientation.up)
+                } else {
+                    print("there was no valid output image")
+                }
+                
+            } else {
+                print("filter failed: \(filterName)")
+            }
 		}
 	}
 	
