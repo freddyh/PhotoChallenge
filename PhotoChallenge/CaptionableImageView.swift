@@ -18,14 +18,14 @@ class CaptionableImageView: UIImageView {
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		
-		userInteractionEnabled = true
-		let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: "updateFilterIndex:")
-		swipeLeftRecognizer.direction = .Left
+        isUserInteractionEnabled = true
+        let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: Selector(("updateFilterIndex:")))
+        swipeLeftRecognizer.direction = .left
 		swipeLeftRecognizer.numberOfTouchesRequired = 1
 		swipeLeftRecognizer.delegate = self
 		
-		let swipeRightRecognizer = UISwipeGestureRecognizer(target: self, action: "updateFilterIndex:")
-		swipeRightRecognizer.direction = .Right
+        let swipeRightRecognizer = UISwipeGestureRecognizer(target: self, action: Selector(("updateFilterIndex:")))
+        swipeRightRecognizer.direction = .right
 		swipeRightRecognizer.numberOfTouchesRequired = 1
 		swipeRightRecognizer.delegate = self
 		
@@ -36,11 +36,11 @@ class CaptionableImageView: UIImageView {
 	var currentImage: UIImage {
 		get {
 			UIGraphicsBeginImageContextWithOptions(frame.size, true, 0)
-			drawViewHierarchyInRect(bounds, afterScreenUpdates: true)
+            drawHierarchy(in: bounds, afterScreenUpdates: true)
 			let result = UIGraphicsGetImageFromCurrentImageContext()
 			UIGraphicsEndImageContext()
 			
-			return result
+            return result!
 		}
 	}
 	
@@ -48,17 +48,17 @@ class CaptionableImageView: UIImageView {
 		
 		
 		switch sender.direction {
-		case UISwipeGestureRecognizerDirection.Right:
+        case UISwipeGestureRecognizer.Direction.right:
 			if filterIndex == -1 {
 				filterIndex = FilterNames.count - 1
 			} else {
-				filterIndex--
+				filterIndex -= -1
 			}
-		case UISwipeGestureRecognizerDirection.Left:
+        case UISwipeGestureRecognizer.Direction.left:
 			if filterIndex == FilterNames.count - 1 {
 				filterIndex = -1
 			} else {
-				filterIndex++
+				filterIndex += 1
 			}
 		default:break
 		}
@@ -72,9 +72,9 @@ class CaptionableImageView: UIImageView {
 			image = originalImage!
 		} else {
 			let filterName = FilterNames[filterIndex]
-			let stillImageFilter = CIFilter(name: filterName, withInputParameters: [kCIInputImageKey:CIImage(image: originalImage!)!])
+			let stillImageFilter = CIFilter(name: filterName, parameters: [kCIInputImageKey:CIImage(image: originalImage!)!])
 			
-			image = UIImage(CIImage: stillImageFilter?.valueForKey(kCIOutputImageKey) as! CIImage, scale: 1.0, orientation: UIImageOrientation.Up)
+            image = UIImage(ciImage: stillImageFilter?.value(forKey: kCIOutputImageKey) as! CIImage, scale: 1.0, orientation: UIImage.Orientation.up)
 		}
 	}
 	
@@ -82,7 +82,7 @@ class CaptionableImageView: UIImageView {
 		
 		let label = PhotoLabel()
 		label.text = text
-		label.frame = CGRectMake(0, 0, (self.superview?.bounds.width)!, 60)
+        label.frame = CGRect(x: 0, y: 0, width: (self.superview?.bounds.width)!, height: 60)
 		label.center = center
 		addSubview(label)
 	}
@@ -99,7 +99,7 @@ extension CaptionableImageView : UIGestureRecognizerDelegate {
 	
 	
 	//Prevent the filter from changing if the user is trying to drag a label
-	func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOfGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		
 
 		if subviews.count > 0 {

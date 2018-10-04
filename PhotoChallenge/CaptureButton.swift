@@ -10,11 +10,10 @@ import UIKit
 
 class CaptureButton: UIButton {
 
-    override func drawRect(rect: CGRect) {
-		
-		let circlePath = UIBezierPath(arcCenter: CGPointMake(rect.midX, rect.midY), radius: rect.width / 2 - 5.0, startAngle: 0, endAngle: 6.28, clockwise: true)
-		UIColor.blueColor().setStroke()
-		UIColor.lightGrayColor().setFill()
+    override func draw(_ rect: CGRect) {
+		let circlePath = UIBezierPath(arcCenter: CGPoint(x: rect.midX, y: rect.midY), radius: rect.width / 2 - 5.0, startAngle: 0, endAngle: 6.28, clockwise: true)
+        UIColor.blue.setStroke()
+        UIColor.lightGray.setFill()
 		circlePath.lineWidth = 4.0
 		circlePath.stroke()
 		circlePath.fill()

@@ -28,13 +28,13 @@ class ImageEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(ImageEditorViewController.dismissKeyboard))
 		tapRecognizer?.cancelsTouchesInView = false
 		view.addGestureRecognizer(tapRecognizer!)
 
     }
 	
-	override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
 		//Update the image
@@ -42,37 +42,37 @@ class ImageEditorViewController: UIViewController {
 		captionableImageView.originalImage = originalImage
 	}
 	
-	@IBAction func cancel(sender: AnyObject) {
+	@IBAction func cancel(_ sender: AnyObject) {
 		delegate?.imageEditorDidCancel()
 		captionableImageView.removeCaptions()
 	}
 	
-	@IBAction func insertCaption(sender: UIButton) {
-		self.view.bringSubviewToFront(textField)
+	@IBAction func insertCaption(_ sender: UIButton) {
+        self.view.bringSubviewToFront(textField)
 		textField.becomeFirstResponder()
-		textField.hidden = false
+        textField.isHidden = false
 	}
 	
-	@IBAction func save(sender: UIBarButtonItem) {
+	@IBAction func save(_ sender: UIBarButtonItem) {
 		
-		saveButton.enabled = false
-		self.view.bringSubviewToFront(activityIndicator)
+        saveButton.isEnabled = false
+        self.view.bringSubviewToFront(activityIndicator)
 		activityIndicator.startAnimating()
-		UIImageWriteToSavedPhotosAlbum(captionableImageView.currentImage, self, "image:didSaveWithError:contextInfo:", nil)
+        UIImageWriteToSavedPhotosAlbum(captionableImageView.currentImage, self, #selector(ImageEditorViewController.image(_:didSaveWithError:contextInfo:)), nil)
 	}
 	
-	@IBAction func share(sender: UIBarButtonItem) {
+	@IBAction func share(_ sender: UIBarButtonItem) {
 		
 		let activityController = UIActivityViewController(activityItems: [captionableImageView.currentImage], applicationActivities: nil)
-		presentViewController(activityController, animated: true, completion: nil)
+        present(activityController, animated: true, completion: nil)
 	}
-	
-	func image(image:UIImage, didSaveWithError error:NSError, contextInfo:UnsafePointer<Void>) {
+    
+    @objc func image(_ image:UIImage, didSaveWithError error:NSError, contextInfo:UnsafeRawPointer) {
 		
 		activityIndicator.stopAnimating()
 		
 		if error.code == 0 {
-			saveButton.enabled = true
+            saveButton.isEnabled = true
 			self.showSavedPhotoAlert()
 		} else {
 			print("Error Code: \(error.code) Error User Info: \(error.userInfo)")
@@ -80,7 +80,7 @@ class ImageEditorViewController: UIViewController {
 		
 	}
 	
-	func dismissKeyboard() {
+	@objc func dismissKeyboard() {
 		view.endEditing(true)
 	}
 	
@@ -88,24 +88,24 @@ class ImageEditorViewController: UIViewController {
 		
 		//Confirmation that the image did save to the Camera Roll
 		//Requires user to press "OK" to dismiss
-		let successAlert = UIAlertController(title: "Successfully Saved", message: "There is a new photo in your library.", preferredStyle: .Alert)
-		let doneAction = UIAlertAction(title: "Thanks", style: .Default, handler: nil)
+        let successAlert = UIAlertController(title: "Successfully Saved", message: "There is a new photo in your library.", preferredStyle: .alert)
+        let doneAction = UIAlertAction(title: "Thanks", style: .default, handler: nil)
 		successAlert.addAction(doneAction)
 		
-		presentViewController(successAlert, animated: true, completion: nil)
+        present(successAlert, animated: true, completion: nil)
 	}
 	
 }
 
 extension ImageEditorViewController : UITextFieldDelegate {
 	
-	func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		self.dismissKeyboard()
 		return true
 	}
 	
-	func textFieldDidEndEditing(textField: UITextField) {
-		textField.hidden = true
-		captionableImageView.insertCaptionWithText(textField.text!)
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.isHidden = true
+        captionableImageView.insertCaptionWithText(text: textField.text!)
 	}
 }

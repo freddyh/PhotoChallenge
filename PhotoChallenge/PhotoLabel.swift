@@ -20,24 +20,24 @@ class PhotoLabel: UILabel {
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		userInteractionEnabled = true
+        isUserInteractionEnabled = true
 		numberOfLines = 0
         
-		panRecognizer = UIPanGestureRecognizer(target: self, action: "move")
+        panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(PhotoLabel.move))
 		panRecognizer?.delegate = self
 		
-		doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "incrementSizeStage")
+        doubleTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(PhotoLabel.incrementSizeStage))
 		doubleTapRecognizer?.numberOfTapsRequired = 2
 		doubleTapRecognizer?.delegate = self
 		
-		longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "deletePhotoLabel")
+        longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(PhotoLabel.deletePhotoLabel))
 		longPressRecognizer?.minimumPressDuration = 1.5
 		longPressRecognizer?.delegate = self
 		
-		pinchRecognizer = UIPinchGestureRecognizer(target: self, action: "stretch")
+        pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(PhotoLabel.stretch))
 		pinchRecognizer?.delegate = self
 		
-		rotationRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate")
+        rotationRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(PhotoLabel.handleRotate))
         rotationRecognizer?.delegate = self
 		
 		self.addGestureRecognizer(panRecognizer!)
@@ -49,9 +49,9 @@ class PhotoLabel: UILabel {
 		/***
 		Center the text and change the font name, size, and color
 		***/
-		textAlignment = .Center
+        textAlignment = .center
 		font = UIFont(name: "Futura", size: 20.0)
-		textColor = UIColor.whiteColor()
+        textColor = UIColor.white
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -62,17 +62,17 @@ class PhotoLabel: UILabel {
 	/***
 	Panning on the label will drag
 	***/
-	func move() {
-		let translation = panRecognizer?.translationInView(self.superview!)
+	@objc func move() {
+        let translation = panRecognizer?.translation(in: self.superview!)
 		self.center.x += (translation?.x)!
 		self.center.y += (translation?.y)!
-		panRecognizer?.setTranslation(CGPointZero, inView: self)
+        panRecognizer?.setTranslation(CGPoint.zero, in: self)
 	}
 	
     /***
      Cycle through different sizes and alignments
     ***/
-	func incrementSizeStage() {
+	@objc func incrementSizeStage() {
 		
 		sizeStage += 1
 		if sizeStage > 3 {
@@ -83,58 +83,60 @@ class PhotoLabel: UILabel {
 			case 0:
 				//Center the label and size it similar to textField
 				self.center = (self.superview?.center)!
-				self.font = UIFont.systemFontOfSize(25)
+                self.font = UIFont.systemFont(ofSize: 25)
 			
 			case 1:
 				//Increase frame size and font
 				let height = (self.superview?.bounds.height)! * 0.4
-				self.textAlignment = .Center
-				self.frame = CGRectMake(0, 0, (self.superview?.bounds.width)!, height)
+                self.textAlignment = .center
+                self.frame = CGRect(x: 0, y: 0, width: (self.superview?.bounds.width)!, height: height)
 				self.center = (self.superview?.center)!
-				self.font = UIFont.systemFontOfSize(50)
+                self.font = UIFont.systemFont(ofSize: 50)
 			
 			case 2:
 				//Right align text
-				self.textAlignment = .Right
+				self.textAlignment = .right
 			
 			case 3:
 				//Left align text
-				self.textAlignment = .Left
+				self.textAlignment = .left
 			default: break
 		}
 	}
 	
-	func deletePhotoLabel() {
+	@objc func deletePhotoLabel() {
 		
 		self.removeFromSuperview()
 	}
 	
-	func stretch() {
+	@objc func stretch() {
 		
 		if let recognizer = pinchRecognizer {
 			switch recognizer.state {
-			case UIGestureRecognizerState.Began:
+            case UIGestureRecognizer.State.began:
 				break
-			case UIGestureRecognizerState.Changed:
-				recognizer.view?.transform = CGAffineTransformScale((recognizer.view?.transform)!, recognizer.scale, recognizer.scale)
+            case UIGestureRecognizer.State.changed:
+				recognizer.view?.transform = CGAffineTransform.init(scaleX: recognizer.scale, y: recognizer.scale)
+//                ((recognizer.view?.transform)!, recognizer.scale, recognizer.scale)
 				recognizer.scale = 1.0
-			case UIGestureRecognizerState.Ended:
+            case UIGestureRecognizer.State.ended:
 				break
 			default: break
 			}
 		}
 	}
 	
-	func handleRotate() {
+	@objc func handleRotate() {
 		if let recognizer = rotationRecognizer {
-			recognizer.view?.transform = CGAffineTransformRotate((recognizer.view?.transform)!, recognizer.rotation)
+			recognizer.view?.transform = CGAffineTransform.init(rotationAngle: recognizer.rotation)
+//                CGAffineTransformRotate((recognizer.view?.transform)!, recognizer.rotation)
 			recognizer.rotation = 0.0
 		}
 	}
 }
 
 extension PhotoLabel : UIGestureRecognizerDelegate {
-	func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 		return true
 	}
 }

@@ -33,7 +33,7 @@ class CameraViewController: UIViewController  {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-		navigationController?.navigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
 		imageEditorViewController = ImageEditorViewController()
 		imageEditorViewController.delegate = self
 		
@@ -45,61 +45,60 @@ class CameraViewController: UIViewController  {
 		720x?pixelsfor back camera
 		***/
 		captureSession = AVCaptureSession()
-		captureSession?.sessionPreset = AVCaptureSessionPresetHigh
+		captureSession?.sessionPreset = AVCaptureSession.Preset(rawValue: convertFromAVCaptureSessionPreset(AVCaptureSession.Preset.high))
 		
-		let backCamera = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
-		
-		do {
-			
-			let input = try AVCaptureDeviceInput(device: backCamera)
-			if ((captureSession?.canAddInput(input)) != nil) {
-				captureSession?.addInput(input)
-				
-				/***
-				Specify the type of output (still image) and format (jpeg)
-				***/
-				stillImageOutput = AVCaptureStillImageOutput()
-				stillImageOutput?.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
-				
-				if captureSession?.canAddOutput(stillImageOutput) != nil {
-					captureSession?.addOutput(stillImageOutput)
-					
-					/***
-					Display video as it being captured by the input device
-					Set the frame so the video fills the screen
-					***/
-					previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-					previewLayer?.videoGravity = AVLayerVideoGravityResizeAspect
-					previewLayer?.connection.videoOrientation = AVCaptureVideoOrientation.Portrait
-					
-					cameraView.layer.insertSublayer(previewLayer!, below: captureButton.layer)
-					
-				}
-			}
-		} catch let error {
-			print("Error creating input with device: \(error)")
-		}
+        let backCamera = AVCaptureDevice.default(for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video)))
+        do {
+            
+            let input = try AVCaptureDeviceInput(device: backCamera!)
+            if ((captureSession?.canAddInput(input)) != nil) {
+                captureSession?.addInput(input)
+                
+                /***
+                 Specify the type of output (still image) and format (jpeg)
+                 ***/
+                stillImageOutput = AVCaptureStillImageOutput()
+                stillImageOutput?.outputSettings = [AVVideoCodecKey : AVVideoCodecJPEG]
+                
+                if captureSession?.canAddOutput(stillImageOutput!) != nil {
+                    captureSession?.addOutput(stillImageOutput!)
+                    
+                    /***
+                     Display video as it being captured by the input device
+                     Set the frame so the video fills the screen
+                     ***/
+                    previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+                    previewLayer?.videoGravity = AVLayerVideoGravity(rawValue: convertFromAVLayerVideoGravity(AVLayerVideoGravity.resizeAspect))
+                    previewLayer?.connection!.videoOrientation = AVCaptureVideoOrientation.portrait
+                    
+                    cameraView.layer.insertSublayer(previewLayer!, below: captureButton.layer)
+                    
+                }
+            }
+        } catch let error {
+            print("Error creating input with device: \(error)")
+        }
     }
 	
-	override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
 		
 		previewLayer?.frame = cameraView.bounds
 		captureSession?.startRunning()
 	}
 	
-	@IBAction func switchCameraButtonTapped(sender: UIButton) {
+	@IBAction func switchCameraButtonTapped(_ sender: UIButton) {
 		
 		//Get a reference to current device and current camera position.
 		//Toggle the position for next device
 		let currentCameraInput = captureSession?.inputs.first as! AVCaptureDeviceInput
-		let nextCameraPosition:AVCaptureDevicePosition = currentCameraInput.device.position == .Front ? .Back : .Front
+        let nextCameraPosition:AVCaptureDevice.Position = currentCameraInput.device.position == .front ? .back : .front
 		
 		//Instantiate new device from array of devices with correct camera position
 		var nextCameraDevice:AVCaptureDevice?
 		for device in AVCaptureDevice.devices() {
-			if (device as! AVCaptureDevice).position == nextCameraPosition {
-				nextCameraDevice = device as? AVCaptureDevice
+			if (device ).position == nextCameraPosition {
+				nextCameraDevice = device
 			}
 		}
 		
@@ -108,7 +107,7 @@ class CameraViewController: UIViewController  {
 		captureSession?.removeInput(currentCameraInput)
 			
 		do {
-			let newCameraInput:AVCaptureDeviceInput = try AVCaptureDeviceInput(device: nextCameraDevice)
+            let newCameraInput:AVCaptureDeviceInput = try AVCaptureDeviceInput(device: nextCameraDevice!)
 		
 			if captureSession?.canAddInput(newCameraInput) != nil {
 				captureSession?.addInput(newCameraInput)
@@ -121,8 +120,7 @@ class CameraViewController: UIViewController  {
 		
 	}
 	
-	@IBAction func tappedCaptureButton(sender: CaptureButton) {
-		
+    @IBAction func captureButtonTapped(_ sender: CaptureButton) {		
 		if !isEditingPhoto {
 			self.takePhoto()
 			self.isEditingPhoto = true
@@ -131,12 +129,12 @@ class CameraViewController: UIViewController  {
 	
 	func takePhoto() {
 		
-		if let videoConnection = stillImageOutput?.connectionWithMediaType(AVMediaTypeVideo) {
+        if let videoConnection = stillImageOutput?.connection(with: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video))) {
 			
-			videoConnection.videoOrientation = AVCaptureVideoOrientation.Portrait
+            videoConnection.videoOrientation = AVCaptureVideoOrientation.portrait
 			
 			
-			stillImageOutput?.captureStillImageAsynchronouslyFromConnection(videoConnection, completionHandler: { (sampleBuffer, error) -> Void in
+            stillImageOutput?.captureStillImageAsynchronously(from: videoConnection, completionHandler: { (sampleBuffer, error) -> Void in
 				
 				if sampleBuffer != nil {
 					
@@ -144,10 +142,10 @@ class CameraViewController: UIViewController  {
                      sampleBuffer contains NSData, convert it to UIImage
                      Pass the UIImage to the imageEditor
                     ***/
-					let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
-					let dataProvider = CGDataProviderCreateWithCFData(imageData)
-					let cgImageRef = CGImageCreateWithJPEGDataProvider(dataProvider, nil, true, .RenderingIntentDefault)
-					let image = UIImage(CGImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.Right)
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer!)
+                    let dataProvider = CGDataProvider(data: imageData! as CFData)
+                    let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent.defaultIntent)
+                    let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImage.Orientation.right)
 					
 					self.imageEditorViewController.originalImage = image
 					self.navigationController?.pushViewController(self.imageEditorViewController, animated: false)
@@ -162,36 +160,64 @@ class CameraViewController: UIViewController  {
 extension CameraViewController : ImageEditorDelegate {
 	
 	func imageEditorDidCancel() {
-		self.navigationController?.popViewControllerAnimated(false)
+        self.navigationController?.popViewController(animated: false)
 		isEditingPhoto = false
 	}
 }
 
 extension CameraViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @IBAction func openPhotoLibrary(sender: UIButton) {
+    @IBAction func openPhotoLibrary(_ sender: UIButton) {
         
         let imagePicker = UIImagePickerController()
-        if UIImagePickerController.isSourceTypeAvailable(.PhotoLibrary) {
-            imagePicker.sourceType = .PhotoLibrary
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            imagePicker.sourceType = .photoLibrary
             imagePicker.delegate = self
-            presentViewController(imagePicker, animated: true, completion: nil)
+            present(imagePicker, animated: true, completion: nil)
         }
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
-        dismissViewControllerAnimated(true, completion: nil)
-        if let image = info[UIImagePickerControllerOriginalImage] {
+        dismiss(animated: true, completion: nil)
+        if let image = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] {
 			
-			self.imageEditorViewController.originalImage = image as! UIImage
+            self.imageEditorViewController.originalImage = (image as! UIImage)
 			self.navigationController?.pushViewController(self.imageEditorViewController, animated: true)
 
         }
     }
     
-    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-		dismissViewControllerAnimated(true, completion: nil)
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVCaptureSessionPreset(_ input: AVCaptureSession.Preset) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVMediaType(_ input: AVMediaType) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVLayerVideoGravity(_ input: AVLayerVideoGravity) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
+}

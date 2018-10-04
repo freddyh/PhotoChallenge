@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="1hV-4i-AcN">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1hV-4i-AcN">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Camera View Controller-->
@@ -15,52 +18,52 @@
                         <viewControllerLayoutGuide type="bottom" id="bgP-kX-ZdY"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="9JD-9Z-ymm">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xvb-Lf-wQm">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHk-Zy-x2V" userLabel="Switch Camera Button">
-                                        <rect key="frame" x="520" y="20" width="60" height="60"/>
+                                        <rect key="frame" x="295" y="20" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="Bxi-Sh-ppC"/>
                                             <constraint firstAttribute="height" constant="60" id="hOk-zc-vru"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="52"/>
                                         <state key="normal" title="↻">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="switchCameraButtonTapped:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Mu6-Hd-ce9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KP9-9U-HKk" customClass="CaptureButton" customModule="PhotoChallenge" customModuleProvider="target">
-                                        <rect key="frame" x="270" y="512" width="60" height="60"/>
+                                        <rect key="frame" x="157.5" y="579" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="60" id="G31-M7-IP5"/>
                                             <constraint firstAttribute="height" constant="60" id="Pm4-7Y-mZ3"/>
                                         </constraints>
                                         <connections>
-                                            <action selector="tappedCaptureButton:" destination="XjF-G8-VbH" eventType="touchUpInside" id="Wse-Wx-nir"/>
+                                            <action selector="captureButtonTapped:" destination="XjF-G8-VbH" eventType="touchUpInside" id="u9W-fp-Enf"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" alpha="0.40000000000000002" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vl2-qa-7jy" userLabel="Photo Library Button">
-                                        <rect key="frame" x="175" y="512" width="60" height="60"/>
+                                        <rect key="frame" x="62.5" y="579" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="4zY-YT-O1s"/>
                                             <constraint firstAttribute="width" constant="60" id="KRb-2N-pAa"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="50"/>
                                         <state key="normal" title="❐">
-                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="openPhotoLibrary:" destination="XjF-G8-VbH" eventType="touchUpInside" id="XKe-Mk-X4V"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="bHk-Zy-x2V" secondAttribute="bottom" constant="8" id="4JR-5Q-knV"/>
                                     <constraint firstItem="bHk-Zy-x2V" firstAttribute="top" secondItem="xvb-Lf-wQm" secondAttribute="top" constant="20" id="7gq-8B-pkD"/>
@@ -74,14 +77,14 @@
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="Bss-6m-dq0"/>
                                         <exclude reference="4JR-5Q-knV"/>
                                         <exclude reference="Zgh-bl-rax"/>
+                                        <exclude reference="Bss-6m-dq0"/>
                                     </mask>
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="xvb-Lf-wQm" secondAttribute="trailing" id="CfV-6z-maD"/>
                             <constraint firstItem="xvb-Lf-wQm" firstAttribute="top" secondItem="9JD-9Z-ymm" secondAttribute="top" id="EZ8-Ep-S7q"/>
@@ -107,7 +110,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1hV-4i-AcN" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="sof-Qw-ksB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
