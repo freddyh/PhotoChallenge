@@ -19,12 +19,14 @@ class CaptionableImageView: UIImageView {
 		super.init(coder: aDecoder)
 		
         isUserInteractionEnabled = true
-        let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: Selector(("updateFilterIndex:")))
+        
+        
+        let swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(CaptionableImageView.updateFilterIndex))
         swipeLeftRecognizer.direction = .left
 		swipeLeftRecognizer.numberOfTouchesRequired = 1
 		swipeLeftRecognizer.delegate = self
 		
-        let swipeRightRecognizer = UISwipeGestureRecognizer(target: self, action: Selector(("updateFilterIndex:")))
+        let swipeRightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(CaptionableImageView.updateFilterIndex))
         swipeRightRecognizer.direction = .right
 		swipeRightRecognizer.numberOfTouchesRequired = 1
 		swipeRightRecognizer.delegate = self
@@ -44,23 +46,24 @@ class CaptionableImageView: UIImageView {
 		}
 	}
 	
-	func updateFilterIndex(sender:UISwipeGestureRecognizer) {
+    @objc func updateFilterIndex(sender:UISwipeGestureRecognizer) {
 		
 		
 		switch sender.direction {
-        case UISwipeGestureRecognizer.Direction.right:
+        case .right:
 			if filterIndex == -1 {
 				filterIndex = FilterNames.count - 1
 			} else {
 				filterIndex -= -1
 			}
-        case UISwipeGestureRecognizer.Direction.left:
+        case .left:
 			if filterIndex == FilterNames.count - 1 {
 				filterIndex = -1
 			} else {
 				filterIndex += 1
 			}
-		default:break
+		default:
+            break
 		}
 		
 		updateImageWithFilter()
